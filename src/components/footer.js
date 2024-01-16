@@ -1,6 +1,11 @@
+// Modules
 import React from "react";
+import { connect } from "react-redux";
 
-const Footer = () => {
+// Helpers
+import { ucfirst } from "../helpers/utils";
+
+const Footer = (props) => {
     return (
         <footer className="section footer-classic context-dark bg-image" style={{ background: "#2d3246" }}>
             <div className="social-footer" style={{ padding: "1em" }}>
@@ -35,24 +40,53 @@ const Footer = () => {
                                 &copy; 2019-{new Date().getFullYear()} Game Charts
                                 <ul>
                                     <li style={{ listStyleType: "none", paddingTop: "5px" }}>
-                                        <a href="http://gamecharts.local/about">About</a>
+                                        <a href="https://gamecharts.org/about">About</a>
                                     </li>
                                     <li style={{ listStyleType: "none", paddingTop: "5px" }}>
-                                        <a href="http://gamecharts.local/privacy">Privacy</a>
+                                        <a href="https://gamecharts.org/privacy">Privacy</a>
                                     </li>
                                     <li style={{ listStyleType: "none", paddingTop: "5px" }}>
-                                        <a href="http://gamecharts.local/cookies">Cookies Policy</a>
+                                        <a href="https://gamecharts.org/cookies">Cookies Policy</a>
                                     </li>
                                 </ul>
                             </div>
                             <div className="col-6 text-white footer-text">
                                 Supported Platforms
-                                <ul style={{ paddingTop: "10px" }}></ul>
+                                <ul style={{ paddingTop: "10px" }}>
+                                    {Object.keys(props.dashboardData.stores).map((key) => (
+                                        <li key={key} style={{ listStyleType: "none", paddingTop: 5 }}>
+                                            <a className="footer-items" href="https://gamecharts.org/<?php echo $store->Store?>">
+                                                {ucfirst(props.dashboardData.stores[key].Store)}
+                                            </a>
+                                        </li>
+                                    ))}
+                                </ul>
                             </div>
                         </div>
                     </div>
                     <div className="col-12 col-md-6 ">
-                        <div className="row"></div>
+                        <div className="row">
+                            {Object.keys(props.dashboardData.stores).map((key) => (
+                                <div key={key} className="footer-item col-md-6 col-6">
+                                    <a href={"https://gamecharts.org/" + props.dashboardData.stores[key].Store + "/player_count"}>
+                                        Top {ucfirst(props.dashboardData.stores[key].Store)} Games
+                                    </a>
+
+                                    <ul style={{ paddingTop: 10 }}>
+                                        {props.dashboardData.stores[key].platform_top_games.map((data) => (
+                                            <li key={data.Name} style={{ listStyleType: "none", paddingTop: 5 }}>
+                                                <a
+                                                    className="footer-items"
+                                                    href={"https://gamecharts.org/" + props.dashboardData.stores[key].Store + "/" + data.NameSEO}
+                                                >
+                                                    {data.Name}
+                                                </a>
+                                            </li>
+                                        ))}
+                                    </ul>
+                                </div>
+                            ))}
+                        </div>
                     </div>
                 </div>
             </div>
@@ -60,4 +94,8 @@ const Footer = () => {
     );
 };
 
-export default Footer;
+const mapStateToProps = (state) => ({
+    dashboardData: state.dashboard,
+});
+
+export default connect(mapStateToProps, null)(Footer);

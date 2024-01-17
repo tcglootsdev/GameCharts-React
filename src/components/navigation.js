@@ -1,4 +1,7 @@
+// Modules
 import React from "react";
+import { useRouter } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navigation = () => {
     React.useEffect(() => {
@@ -100,7 +103,7 @@ const Navigation = () => {
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-gradient-green fixed-top">
-            <a href="https://gamecharts.org">
+            <Link to={"/"}>
                 <img
                     src="https://gamecharts.org/assets/images/logo-1.png"
                     className="logoGameCharts"
@@ -108,7 +111,7 @@ const Navigation = () => {
                     width="235px"
                     height="60px"
                 />
-            </a>
+            </Link>
             <button
                 className="navbar-toggler"
                 type="button"

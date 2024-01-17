@@ -5,7 +5,14 @@ import { connect } from "react-redux";
 // Helpers
 import { ucfirst } from "../helpers/utils";
 
+// Actions
+import { getDashboardData } from "../redux/dashboard/actions";
+
 const Footer = (props) => {
+    React.useEffect(() => {
+        props.getDashboardData();
+    }, [props.getDashboardData]);
+
     return (
         <footer className="section footer-classic context-dark bg-image" style={{ background: "#2d3246" }}>
             <div className="social-footer" style={{ padding: "1em" }}>
@@ -98,4 +105,8 @@ const mapStateToProps = (state) => ({
     dashboardData: state.dashboard,
 });
 
-export default connect(mapStateToProps, null)(Footer);
+const mapDispatchToProps = {
+    getDashboardData,
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Footer);

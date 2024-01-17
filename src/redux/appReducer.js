@@ -1,7 +1,9 @@
 import dashboardReducer from "./dashboard/reducer";
+import platformReducer from "./platform/reducer";
 
 const appReducer = {
-    dashboard: dashboardReducer
-}
+    dashboard: dashboardReducer,
+    platform: platformReducer,
+};
 
 export default appReducer;

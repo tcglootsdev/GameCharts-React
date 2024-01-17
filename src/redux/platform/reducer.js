@@ -11,12 +11,12 @@ const initialState = {
     error: null
 };
 
-const dashboardReducer = handleActions({
-    [actionTypes.GET_DASHBOARD_DATA_REQUEST]: (state, action) => ({
+const plaformReducer = handleActions({
+    [actionTypes.GET_PLATFORM_DATA_REQUEST]: (state, action) => ({
         ...state,
         loading: true
     }),
-    [actionTypes.GET_DASHBOARD_DATA_SUCCESS]: (state, action) => {
+    [actionTypes.GET_PLATFORM_DATA_SUCCESS]: (state, action) => {
         const { payload } = action;
         const newState = { ...state, loading: false };
         if (typeof payload === 'object') {
@@ -29,11 +29,11 @@ const dashboardReducer = handleActions({
         }
         return newState;
     },
-    [actionTypes.GET_DASHBOARD_DATA_FAIL]: (state, action) => ({
+    [actionTypes.GET_PLATFORM_DATA_FAIL]: (state, action) => ({
         ...state,
         loading: false,
         error: action.payload
     }),
 }, initialState);
 
-export default dashboardReducer;
+export default plaformReducer;

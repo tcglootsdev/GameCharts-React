@@ -1,17 +1,25 @@
 // Modules
 import React from "react";
 import { connect } from "react-redux";
+import axios from "axios";
 
 // Helpers
 import { ucfirst } from "../helpers/utils";
 
-// Actions
-import { getDashboardData } from "../redux/dashboard/actions";
-
 const Footer = (props) => {
+    const [sFooterData, setFooterData] = React.useState({
+        stores: {}
+    });
+
     React.useEffect(() => {
-        props.getDashboardData();
-    }, [props.getDashboardData]);
+        try {
+            axios.get("https://gamecharts.org/api/dashboard.php").then((response) => {
+                setFooterData(response.data);
+            });
+        } catch (error) {
+            console.log(error.message);
+        }
+    }, []);
 
     return (
         <footer className="section footer-classic context-dark bg-image" style={{ background: "#2d3246" }}>
@@ -60,10 +68,10 @@ const Footer = (props) => {
                             <div className="col-6 text-white footer-text">
                                 Supported Platforms
                                 <ul style={{ paddingTop: "10px" }}>
-                                    {Object.keys(props.dashboardData.stores).map((key) => (
+                                    {Object.keys(sFooterData.stores).map((key) => (
                                         <li key={key} style={{ listStyleType: "none", paddingTop: 5 }}>
                                             <a className="footer-items" href="https://gamecharts.org/<?php echo $store->Store?>">
-                                                {ucfirst(props.dashboardData.stores[key].Store)}
+                                                {ucfirst(sFooterData.stores[key].Store)}
                                             </a>
                                         </li>
                                     ))}
@@ -73,18 +81,18 @@ const Footer = (props) => {
                     </div>
                     <div className="col-12 col-md-6 ">
                         <div className="row">
-                            {Object.keys(props.dashboardData.stores).map((key) => (
+                            {Object.keys(sFooterData.stores).map((key) => (
                                 <div key={key} className="footer-item col-md-6 col-6">
-                                    <a href={"https://gamecharts.org/" + props.dashboardData.stores[key].Store + "/player_count"}>
-                                        Top {ucfirst(props.dashboardData.stores[key].Store)} Games
+                                    <a href={"https://gamecharts.org/" + sFooterData.stores[key].Store + "/player_count"}>
+                                        Top {ucfirst(sFooterData.stores[key].Store)} Games
                                     </a>
 
                                     <ul style={{ paddingTop: 10 }}>
-                                        {props.dashboardData.stores[key].platform_top_games.map((data) => (
+                                        {sFooterData.stores[key].platform_top_games.map((data) => (
                                             <li key={data.Name} style={{ listStyleType: "none", paddingTop: 5 }}>
                                                 <a
                                                     className="footer-items"
-                                                    href={"https://gamecharts.org/" + props.dashboardData.stores[key].Store + "/" + data.NameSEO}
+                                                    href={"https://gamecharts.org/" + sFooterData.stores[key].Store + "/" + data.NameSEO}
                                                 >
                                                     {data.Name}
                                                 </a>
@@ -101,12 +109,4 @@ const Footer = (props) => {
     );
 };
 
-const mapStateToProps = (state) => ({
-    dashboardData: state.dashboard,
-});
-
-const mapDispatchToProps = {
-    getDashboardData,
-};
-
-export default connect(mapStateToProps, mapDispatchToProps)(Footer);
+export default Footer;

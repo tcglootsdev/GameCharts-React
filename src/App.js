@@ -1,7 +1,6 @@
 // Modules
 import React from "react";
-import { RouterProvider, BrowserRouter, useRoutes, Routes } from "react-router-dom";
-import { Provider } from "react-redux";
+import { BrowserRouter } from "react-router-dom";
 
 // Routers
 import AppRouter from "./appRouter";
@@ -9,9 +8,6 @@ import AppRouter from "./appRouter";
 // Components
 import Navigation from "./components/navigation";
 import Footer from "./components/footer";
-
-// Redux
-import appStore from "./redux/appStore";
 
 // Styles
 import "./App.css";
@@ -113,15 +109,13 @@ const App = () => {
     }, []);
 
     return (
-        <Provider store={appStore}>
-            <React.StrictMode>
-                <BrowserRouter>
-                    <Navigation />
-                    <AppRouter />
-                    <Footer />
-                </BrowserRouter>
-            </React.StrictMode>
-        </Provider>
+        <React.StrictMode>
+            <BrowserRouter>
+                <Navigation />
+                <AppRouter />
+                <Footer />
+            </BrowserRouter>
+        </React.StrictMode>
     );
 };
 

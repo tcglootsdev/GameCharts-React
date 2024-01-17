@@ -19,6 +19,12 @@ const Platform = () => {
         () => "GameCharts. This page shows " + ucfirst(source) + " Top Games and Trending of Games by current players or average players.",
         [source]
     );
+    const rBxSlideStatus = React.useRef({
+        trending: null,
+        trending_average: null,
+        topdata: null,
+        topdata_average: null
+    });
 
     React.useEffect(() => {
         $(".desktop-screen").show();
@@ -92,26 +98,38 @@ const Platform = () => {
             };
             new ApexCharts(e, options1).render();
         });
-        if (sPlatformData.trending.length > 0) {
-            $("#trending_game_slider").bxSlider({
+        // if (sPlatformData.trending.length > 0) {
+            if (rBxSlideStatus.current.trending) {
+                rBxSlideStatus.current.trending.destroySlider();
+            }
+            rBxSlideStatus.current.trending = $("#trending_game_slider").bxSlider({
                 touchEnabled: false,
             });
-        }
-        if (sPlatformData.topdata.length > 0) {
-            $("#top_game_slider").bxSlider({
+        // }
+        // if (sPlatformData.topdata.length > 0) {
+            if (rBxSlideStatus.current.topdata) {
+                rBxSlideStatus.current.topdata.destroySlider();
+            }
+            rBxSlideStatus.current.topdata = $("#top_game_slider").bxSlider({
                 touchEnabled: false,
             });
-        }
-        if (sPlatformData.trending_average.length > 0) {
-            $("#trending_game_average_slider").bxSlider({
+        // }
+        // if (sPlatformData.trending_average.length > 0) {
+            if (rBxSlideStatus.current.trending_average) {
+                rBxSlideStatus.current.trending_average.destroySlider();
+            }
+            rBxSlideStatus.current.trending_average = $("#trending_game_average_slider").bxSlider({
                 touchEnabled: false,
             });
-        }
-        if (sPlatformData.topdata_average.length > 0) {
-            $("#top_game_average_slider").bxSlider({
+        // }
+        // if (sPlatformData.topdata_average.length > 0) {
+            if (rBxSlideStatus.current.topdata_average) {
+                rBxSlideStatus.current.topdata_average.destroySlider();
+            }
+            rBxSlideStatus.current.topdata_average = $("#top_game_average_slider").bxSlider({
                 touchEnabled: false,
             });
-        }
+        // }
     }, [sPlatformData]);
 
     return (

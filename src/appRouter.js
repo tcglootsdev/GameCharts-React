@@ -13,6 +13,10 @@ const AppRouter = () => {
             element: <Dashboard />,
         },
         {
+            path: "/search/:seachValue",
+            element: <Game />,
+        },
+        {
             path: "/:source",
             element: <Platform />,
         },

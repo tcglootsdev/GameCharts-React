@@ -9,6 +9,7 @@ import parser from "html-react-parser";
 import { ucfirst } from "../helpers/utils";
 
 const Game = () => {
+    const { source, nameseo } = useParams();
     const [sGameData, setGameData] = React.useState({
         gameinfo_aux: [],
         gamedata_aux: [],
@@ -36,7 +37,7 @@ const Game = () => {
         } catch (error) {
             console.log(error.message);
         }
-    }, []);
+    }, [source, nameseo]);
 
     React.useEffect(() => {
         setGameInfoAux(typeof sGameData.gameinfo_aux[0] === "object" ? sGameData.gameinfo_aux[0] : {});
@@ -83,7 +84,7 @@ const Game = () => {
                 series: seriesOptions,
             });
         };
-        
+
         const successToday = () => {
             var name = "TODAY";
             var i = 0;
@@ -293,7 +294,6 @@ const Game = () => {
         successWeekago();
     }, [sGameData]);
 
-    const { source, nameseo } = useParams();
     const title = React.useMemo(() => "Game Charts Detail : " + sGameInfoAux.Name, [sGameInfoAux]);
     const description = React.useMemo(
         () =>

@@ -5,46 +5,23 @@ import { Link } from "react-router-dom";
 
 const Navigation = () => {
     React.useEffect(() => {
-        window.onload = () => {
-            document.getElementById("searchBoxIcon").onclick = function () {
-                var value = document.getElementById("searchBox").value;
-
-                if (value.length >= 2) {
-                    window.location.href = "https://gamecharts.org/search/" + value.toLowerCase();
-                }
-            };
-        };
-        var stores = [];
-        var sourceData = $.getJSON("./data/store.json", function (data) {
-            $.each(data, function (item, field) {
-                stores[field.Store] = field.Splash;
-            });
-        });
-
-        $("#searchBox").submit(function (e) {
-            e.preventDefault();
-            //	e.preventDefault();
-            var value = $(this).val();
-            window.location.href = "https://gamecharts.org/search/" + value.toLowerCase();
-
-            return false;
-        });
-
-        $("#searchBox").keydown(function (e) {
-            if (e.keyCode == 13) {
-                e.preventDefault();
-                var value = $(this).val();
-                window.location.href = "https://gamecharts.org/search/" + value.toLowerCase();
-
-                return false;
+        $("#searchBoxIcon").click(() => {
+            const searchValue = $("#searchBox").val();
+            if (searchValue.length >= 2) {
+                window.location.href = "https://gamecharts.org/search/" + searchValue.toLowerCase();
             }
         });
-
+        $("form[role='search']").submit(function (e) {
+            e.preventDefault();
+            const searchValue = $('#searchBox').val();
+            window.location.href = "https://gamecharts.org/search/" + searchValue.toLowerCase();
+            return false;
+        });
         $("#searchBox").keyup(function () {
-            var value = $(this).val();
-            if (value.length >= 2) {
-                var searchString = value.substring(0, 2).toLowerCase();
-                var gameList = $.getJSON("https://gamecharts.org/data/search/" + searchString + ".json", function (data) {
+            var searchValue = $(this).val();
+            if (searchValue.length >= 2) {
+                var searchString = searchValue.substring(0, 2).toLowerCase();
+                $.getJSON("https://gamecharts.org/data/search/" + searchString + ".json", function (data) {
                     $("#searched_game").show();
                     $("#searched_game").html("");
                     var encontrado = false;
@@ -52,15 +29,13 @@ const Navigation = () => {
 
                     $.each(data, function (item, field) {
                         var gameName = field.Name.toLowerCase();
-                        var searchGame = gameName.substring(0, value.length).toLowerCase();
-                        var searchedGame = value.toLowerCase();
+                        var searchGame = gameName.substring(0, searchValue.length).toLowerCase();
+                        var searchedGame = searchValue.toLowerCase();
 
                         if (searchedGame == searchGame) {
                             encontrado = true;
                             encontrados++;
-                            /*var texto = '<div class="item" style="width:100%; text-align:right; padding-right:10px; height:60px; background-color: #fff; border: 2px solid #000; border-radius: 20px; margin-top:1px;" >';*/
                             var texto = '<div class="item">';
-                            //texto = texto + '<a style="top: 0;left: 260px;display: block;height: 0;line-height: 70px;width: initial;text-align: center;color: #a8a8b1; position: static;" href="./' + field.Source + '/' + field.AppId + '">';
                             texto =
                                 texto +
                                 '<a style="width: initial;color: #030303; position: static; text-align: right; margin-right: 10px;" href="https://gamecharts.org/' +
@@ -131,7 +106,7 @@ const Navigation = () => {
                 </ul>
                 <ul className="list-unstyled topbar-nav navbar-search">
                     <li className="hide-phone app-search">
-                        <form role="search" className="">
+                        <form role="search">
                             <input type="text" id="searchBox" placeholder="Search..." className="form-control bg-light-gray" />
                             <i id="searchBoxIcon" className="fas fa-search"></i>
                         </form>

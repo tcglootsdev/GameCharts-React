@@ -1,14 +1,14 @@
 // Modules
 import React from "react";
-import { connect } from "react-redux";
 import axios from "axios";
+import { Link } from "react-router-dom";
 
 // Helpers
 import { ucfirst } from "../helpers/utils";
 
 const Footer = (props) => {
     const [sFooterData, setFooterData] = React.useState({
-        stores: {}
+        stores: {},
     });
 
     React.useEffect(() => {
@@ -70,9 +70,9 @@ const Footer = (props) => {
                                 <ul style={{ paddingTop: "10px" }}>
                                     {Object.keys(sFooterData.stores).map((key) => (
                                         <li key={key} style={{ listStyleType: "none", paddingTop: 5 }}>
-                                            <a className="footer-items" href="https://gamecharts.org/<?php echo $store->Store?>">
+                                            <Link className="footer-items" to={"/" + sFooterData.stores[key].Store}>
                                                 {ucfirst(sFooterData.stores[key].Store)}
-                                            </a>
+                                            </Link>
                                         </li>
                                     ))}
                                 </ul>
@@ -90,12 +90,9 @@ const Footer = (props) => {
                                     <ul style={{ paddingTop: 10 }}>
                                         {sFooterData.stores[key].platform_top_games.map((data) => (
                                             <li key={data.Name} style={{ listStyleType: "none", paddingTop: 5 }}>
-                                                <a
-                                                    className="footer-items"
-                                                    href={"https://gamecharts.org/" + sFooterData.stores[key].Store + "/" + data.NameSEO}
-                                                >
+                                                <Link className="footer-items" to={"/" + sFooterData.stores[key].Store + "/" + data.NameSEO}>
                                                     {data.Name}
-                                                </a>
+                                                </Link>
                                             </li>
                                         ))}
                                     </ul>

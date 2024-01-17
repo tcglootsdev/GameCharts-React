@@ -9,9 +9,6 @@ import AppRouter from "./appRouter";
 import Navigation from "./components/navigation";
 import Footer from "./components/footer";
 
-// Styles
-import "./App.css";
-
 const App = () => {
     React.useEffect(() => {
         (function ($) {

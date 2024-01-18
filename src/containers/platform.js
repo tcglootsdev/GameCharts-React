@@ -23,7 +23,7 @@ const Platform = () => {
         trending: null,
         trending_average: null,
         topdata: null,
-        topdata_average: null
+        topdata_average: null,
     });
 
     React.useEffect(() => {
@@ -99,36 +99,36 @@ const Platform = () => {
             new ApexCharts(e, options1).render();
         });
         // if (sPlatformData.trending.length > 0) {
-            if (rBxSlideStatus.current.trending) {
-                rBxSlideStatus.current.trending.destroySlider();
-            }
-            rBxSlideStatus.current.trending = $("#trending_game_slider").bxSlider({
-                touchEnabled: false,
-            });
+        if (rBxSlideStatus.current.trending) {
+            rBxSlideStatus.current.trending.destroySlider();
+        }
+        rBxSlideStatus.current.trending = $("#trending_game_slider").bxSlider({
+            touchEnabled: false,
+        });
         // }
         // if (sPlatformData.topdata.length > 0) {
-            if (rBxSlideStatus.current.topdata) {
-                rBxSlideStatus.current.topdata.destroySlider();
-            }
-            rBxSlideStatus.current.topdata = $("#top_game_slider").bxSlider({
-                touchEnabled: false,
-            });
+        if (rBxSlideStatus.current.topdata) {
+            rBxSlideStatus.current.topdata.destroySlider();
+        }
+        rBxSlideStatus.current.topdata = $("#top_game_slider").bxSlider({
+            touchEnabled: false,
+        });
         // }
         // if (sPlatformData.trending_average.length > 0) {
-            if (rBxSlideStatus.current.trending_average) {
-                rBxSlideStatus.current.trending_average.destroySlider();
-            }
-            rBxSlideStatus.current.trending_average = $("#trending_game_average_slider").bxSlider({
-                touchEnabled: false,
-            });
+        if (rBxSlideStatus.current.trending_average) {
+            rBxSlideStatus.current.trending_average.destroySlider();
+        }
+        rBxSlideStatus.current.trending_average = $("#trending_game_average_slider").bxSlider({
+            touchEnabled: false,
+        });
         // }
         // if (sPlatformData.topdata_average.length > 0) {
-            if (rBxSlideStatus.current.topdata_average) {
-                rBxSlideStatus.current.topdata_average.destroySlider();
-            }
-            rBxSlideStatus.current.topdata_average = $("#top_game_average_slider").bxSlider({
-                touchEnabled: false,
-            });
+        if (rBxSlideStatus.current.topdata_average) {
+            rBxSlideStatus.current.topdata_average.destroySlider();
+        }
+        rBxSlideStatus.current.topdata_average = $("#top_game_average_slider").bxSlider({
+            touchEnabled: false,
+        });
         // }
     }, [sPlatformData]);
 
@@ -312,12 +312,12 @@ const Platform = () => {
                                                         </table>
                                                     </div>
                                                     <div className="d-flex justify-content-end border-top py-1 px-3">
-                                                        <a
+                                                        <Link
                                                             className="btn btn-primary btn-round waves-effect waves-light"
-                                                            href="https://gamecharts.org/<?php echo($source); ?>/player_count"
+                                                            to={"/" + source + "/player_count"}
                                                         >
                                                             More
-                                                        </a>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>
@@ -496,12 +496,12 @@ const Platform = () => {
                                                         </table>
                                                     </div>
                                                     <div className="d-flex justify-content-end border-top py-1 px-3">
-                                                        <a
+                                                        <Link
                                                             className="btn btn-primary btn-round waves-effect waves-light"
-                                                            href="https://gamecharts.org/<?php echo($source); ?>/player_average"
+                                                            to={"/" + source + "/player_average"}
                                                         >
                                                             More
-                                                        </a>
+                                                        </Link>
                                                     </div>
                                                 </div>
                                             </div>

@@ -175,7 +175,7 @@ const Dashboard = () => {
                                                                                         className="lazyload blur-up"
                                                                                         width="100%"
                                                                                         height="100%"
-                                                                                        data-src={sDashboardData.stores[data.store].Splash}
+                                                                                        src={sDashboardData.stores[data.store].Splash}
                                                                                         alt={sDashboardData.stores[data.store].store}
                                                                                         style={{ maxWidth: "75px", maxHeight: "30px" }}
                                                                                     />
@@ -279,7 +279,7 @@ const Dashboard = () => {
                                                                                         className="lazyload blur-up"
                                                                                         width="100%"
                                                                                         height="100%"
-                                                                                        data-src={sDashboardData.stores[data.Store].Splash}
+                                                                                        src={sDashboardData.stores[data.Store].Splash}
                                                                                         alt={sDashboardData.stores[data.Store].Store}
                                                                                         style={{ maxWidth: 75, maxHeight: 30 }}
                                                                                     />
@@ -376,7 +376,7 @@ const Dashboard = () => {
                                                                                         className="lazyload blur-up"
                                                                                         width="100%"
                                                                                         height="100%"
-                                                                                        data-src={sDashboardData.stores[data.store].Splash}
+                                                                                        src={sDashboardData.stores[data.store].Splash}
                                                                                         alt={sDashboardData.stores[data.store].Store}
                                                                                         style={{ maxWidth: 75, maxHeight: 30 }}
                                                                                     />
@@ -479,7 +479,7 @@ const Dashboard = () => {
                                                                                         className="lazyload blur-up"
                                                                                         width="100%"
                                                                                         height="100%"
-                                                                                        data-src={sDashboardData.stores[data.Store].Splash}
+                                                                                        src={sDashboardData.stores[data.Store].Splash}
                                                                                         style={{ maxWidth: 75, maxHeight: 30 }}
                                                                                         alt={"Go to " + data.Name + " site"}
                                                                                     />

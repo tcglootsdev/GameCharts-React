@@ -1,23 +1,25 @@
 // Modules
 import React from "react";
-import { useRouter } from "react-router-dom";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navigation = () => {
+    const navigate = useNavigate();
     React.useEffect(() => {
         $("#searchBoxIcon").click(() => {
             const searchValue = $("#searchBox").val();
             if (searchValue.length >= 2) {
-                window.location.href = "https://gamecharts.org/search/" + searchValue.toLowerCase();
+                navigate("/search/" + searchValue.toLowerCase());
+                $("#searched_game").hide();
             }
         });
         $("form[role='search']").submit(function (e) {
             e.preventDefault();
-            const searchValue = $('#searchBox').val();
-            window.location.href = "https://gamecharts.org/search/" + searchValue.toLowerCase();
-            return false;
+            const searchValue = $("#searchBox").val();
+            navigate("/search/" + searchValue.toLowerCase());
+            $("#searched_game").hide();
         });
-        $("#searchBox").keyup(function () {
+        $("#searchBox").keyup(function (e) {
+            if (e.keyCode == 13) return;
             var searchValue = $(this).val();
             if (searchValue.length >= 2) {
                 var searchString = searchValue.substring(0, 2).toLowerCase();

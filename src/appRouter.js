@@ -5,6 +5,7 @@ import { useRoutes } from "react-router-dom";
 import Dashboard from "./containers/dashboard";
 import Platform from "./containers/platform";
 import Game from "./containers/game";
+import Search from "./containers/search";
 
 const AppRouter = () => {
     return useRoutes([
@@ -13,8 +14,8 @@ const AppRouter = () => {
             element: <Dashboard />,
         },
         {
-            path: "/search/:seachValue",
-            element: <Game />,
+            path: "/search/:searchValue",
+            element: <Search />,
         },
         {
             path: "/:source",

@@ -40,8 +40,8 @@ const Game = () => {
     }, [source, nameseo]);
 
     React.useEffect(() => {
-        setGameInfoAux(typeof sGameData.gameinfo_aux[0] === "object" ? sGameData.gameinfo_aux[0] : {});
-        setGameDataAux(typeof sGameData.gamedata_aux[0] === "object" ? sGameData.gamedata_aux[0] : {});
+        setGameInfoAux(sGameData.gameinfo_aux && typeof sGameData.gameinfo_aux[0] === "object" ? sGameData.gameinfo_aux[0] : {});
+        setGameDataAux(sGameData.gamedata_aux && typeof sGameData.gamedata_aux[0] === "object" ? sGameData.gamedata_aux[0] : {});
     }, [sGameData]);
 
     React.useEffect(() => {

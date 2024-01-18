@@ -15,6 +15,7 @@ const Navigation = () => {
         $("form[role='search']").submit(function (e) {
             e.preventDefault();
             const searchValue = $("#searchBox").val();
+            if (searchValue.length < 2) return;
             navigate("/search/" + searchValue.toLowerCase());
             $("#searched_game").hide();
         });

@@ -55,13 +55,13 @@ const Footer = (props) => {
                                 &copy; 2019-{new Date().getFullYear()} Game Charts
                                 <ul>
                                     <li style={{ listStyleType: "none", paddingTop: "5px" }}>
-                                        <a href="https://gamecharts.org/about">About</a>
+                                        <Link to="/about">About</Link>
                                     </li>
                                     <li style={{ listStyleType: "none", paddingTop: "5px" }}>
-                                        <a href="https://gamecharts.org/privacy">Privacy</a>
+                                        <Link to="/privacy">Privacy</Link>
                                     </li>
                                     <li style={{ listStyleType: "none", paddingTop: "5px" }}>
-                                        <a href="https://gamecharts.org/cookies">Cookies Policy</a>
+                                        <Link to="/cookies">Cookies Policy</Link>
                                     </li>
                                 </ul>
                             </div>

@@ -57,7 +57,7 @@ const Player = (props) => {
                 <link rel="canonical" href={sPlayerData.canonical} />
                 <meta name="twitter:title" content={sPlayerData.title}></meta>
                 <meta name="twitter:description" content={sPlayerData.description} />
-                <meta property="og:title" content={"Game Charts - " + sPlayerData.title} />
+                <meta property="og:title" content={sPlayerData.title} />
                 <meta property="og:description" content={sPlayerData.description} />
             </Helmet>
             <div className="row game-platforms">
@@ -181,7 +181,7 @@ const Player = (props) => {
                                         <div className="col-12">
                                             <div id="top_game_slider" className="top_game_slider">
                                                 {sPlayerData.top_data.map((data) => (
-                                                    <div className="row ml-1 mr-1">
+                                                    <div key={data.Name} className="row ml-1 mr-1">
                                                         <div style={{ display: "inline-block", padding: 0 }} className="col-12 col-md-5">
                                                             <Link to={"/" + source + "/" + data.NameSEO}>
                                                                 <img

@@ -320,9 +320,9 @@ const Game = () => {
                     {sGameData.stores.map((store) => {
                         if (store.Store === source) {
                             <li key={store.Store}>
-                                <a href={"https://gamecharts.org/" + store.Store}>
+                                <Link href={"/" + store.Store}>
                                     <img alt={store.Store} src={store.Splash} />
-                                </a>
+                                </Link>
                             </li>;
                         }
                     })}

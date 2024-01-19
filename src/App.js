@@ -9,8 +9,19 @@ import AppRouter from "./appRouter";
 import Navigation from "./components/navigation";
 import Footer from "./components/footer";
 
+// Styles
+import "./App.css";
+
 const App = () => {
     React.useEffect(() => {
+        const initTheme = () => {
+            let themeMode = localStorage.getItem("themeMode");
+            if (themeMode !== "light" && themeMode !== "dark") {
+                themeMode = "light";
+            }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        };
+
         const initSlimscroll = () => {
             $(".slimscroll").slimscroll({
                 height: "auto",
@@ -63,6 +74,7 @@ const App = () => {
             });
         };
 
+        initTheme();
         initSlimscroll();
         initMetisMenu();
         initLeftMenuCollapse();

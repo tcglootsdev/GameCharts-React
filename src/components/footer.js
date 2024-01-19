@@ -83,9 +83,9 @@ const Footer = (props) => {
                         <div className="row">
                             {Object.keys(sFooterData.stores).map((key) => (
                                 <div key={key} className="footer-item col-md-6 col-6">
-                                    <a href={"https://gamecharts.org/" + sFooterData.stores[key].Store + "/player_count"}>
+                                    <Link to={"/" + sFooterData.stores[key].Store + "/player_count"}>
                                         Top {ucfirst(sFooterData.stores[key].Store)} Games
-                                    </a>
+                                    </Link>
 
                                     <ul style={{ paddingTop: 10 }}>
                                         {sFooterData.stores[key].platform_top_games.map((data) => (

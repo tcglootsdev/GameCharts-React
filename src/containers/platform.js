@@ -27,7 +27,7 @@ const Platform = () => {
     });
 
     React.useEffect(() => {
-        $(".desktop-screen").show();
+        // $(".desktop-screen").show();
     }, []);
 
     const [sPlatformData, setPlatformData] = React.useState({
@@ -52,85 +52,85 @@ const Platform = () => {
         }
     }, [source]);
 
-    React.useEffect(() => {
-        $(".chart-today").each(function (i, e) {
-            e.innerHTML = "";
-            var options1 = {
-                chart: {
-                    type: "line",
-                    width: 140,
-                    height: 30,
-                    sparkline: {
-                        enabled: true,
-                    },
-                },
-                series: [
-                    {
-                        data: JSON.parse($(this).attr("data-series")),
-                    },
-                ],
-                stroke: {
-                    width: 2,
-                    curve: "smooth",
-                },
-                markers: {
-                    size: 0,
-                },
-                colors: ["#028602"],
-                tooltip: {
-                    fixed: {
-                        enabled: false,
-                    },
-                    x: {
-                        show: false,
-                    },
-                    y: {
-                        title: {
-                            formatter: function (seriesName) {
-                                return "";
-                            },
-                        },
-                    },
-                    marker: {
-                        show: false,
-                    },
-                },
-            };
-            new ApexCharts(e, options1).render();
-        });
-        // if (sPlatformData.trending.length > 0) {
-        if (rBxSlideStatus.current.trending) {
-            rBxSlideStatus.current.trending.destroySlider();
-        }
-        rBxSlideStatus.current.trending = $("#trending_game_slider").bxSlider({
-            touchEnabled: false,
-        });
-        // }
-        // if (sPlatformData.topdata.length > 0) {
-        if (rBxSlideStatus.current.topdata) {
-            rBxSlideStatus.current.topdata.destroySlider();
-        }
-        rBxSlideStatus.current.topdata = $("#top_game_slider").bxSlider({
-            touchEnabled: false,
-        });
-        // }
-        // if (sPlatformData.trending_average.length > 0) {
-        if (rBxSlideStatus.current.trending_average) {
-            rBxSlideStatus.current.trending_average.destroySlider();
-        }
-        rBxSlideStatus.current.trending_average = $("#trending_game_average_slider").bxSlider({
-            touchEnabled: false,
-        });
-        // }
-        // if (sPlatformData.topdata_average.length > 0) {
-        if (rBxSlideStatus.current.topdata_average) {
-            rBxSlideStatus.current.topdata_average.destroySlider();
-        }
-        rBxSlideStatus.current.topdata_average = $("#top_game_average_slider").bxSlider({
-            touchEnabled: false,
-        });
-        // }
-    }, [sPlatformData]);
+    // React.useEffect(() => {
+    //     $(".chart-today").each(function (i, e) {
+    //         e.innerHTML = "";
+    //         var options1 = {
+    //             chart: {
+    //                 type: "line",
+    //                 width: 140,
+    //                 height: 30,
+    //                 sparkline: {
+    //                     enabled: true,
+    //                 },
+    //             },
+    //             series: [
+    //                 {
+    //                     data: JSON.parse($(this).attr("data-series")),
+    //                 },
+    //             ],
+    //             stroke: {
+    //                 width: 2,
+    //                 curve: "smooth",
+    //             },
+    //             markers: {
+    //                 size: 0,
+    //             },
+    //             colors: ["#028602"],
+    //             tooltip: {
+    //                 fixed: {
+    //                     enabled: false,
+    //                 },
+    //                 x: {
+    //                     show: false,
+    //                 },
+    //                 y: {
+    //                     title: {
+    //                         formatter: function (seriesName) {
+    //                             return "";
+    //                         },
+    //                     },
+    //                 },
+    //                 marker: {
+    //                     show: false,
+    //                 },
+    //             },
+    //         };
+    //         new ApexCharts(e, options1).render();
+    //     });
+    //     // if (sPlatformData.trending.length > 0) {
+    //     if (rBxSlideStatus.current.trending) {
+    //         rBxSlideStatus.current.trending.destroySlider();
+    //     }
+    //     rBxSlideStatus.current.trending = $("#trending_game_slider").bxSlider({
+    //         touchEnabled: false,
+    //     });
+    //     // }
+    //     // if (sPlatformData.topdata.length > 0) {
+    //     if (rBxSlideStatus.current.topdata) {
+    //         rBxSlideStatus.current.topdata.destroySlider();
+    //     }
+    //     rBxSlideStatus.current.topdata = $("#top_game_slider").bxSlider({
+    //         touchEnabled: false,
+    //     });
+    //     // }
+    //     // if (sPlatformData.trending_average.length > 0) {
+    //     if (rBxSlideStatus.current.trending_average) {
+    //         rBxSlideStatus.current.trending_average.destroySlider();
+    //     }
+    //     rBxSlideStatus.current.trending_average = $("#trending_game_average_slider").bxSlider({
+    //         touchEnabled: false,
+    //     });
+    //     // }
+    //     // if (sPlatformData.topdata_average.length > 0) {
+    //     if (rBxSlideStatus.current.topdata_average) {
+    //         rBxSlideStatus.current.topdata_average.destroySlider();
+    //     }
+    //     rBxSlideStatus.current.topdata_average = $("#top_game_average_slider").bxSlider({
+    //         touchEnabled: false,
+    //     });
+    //     // }
+    // }, [sPlatformData]);
 
     return (
         <>

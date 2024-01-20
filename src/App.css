@@ -84,7 +84,7 @@ body {
 }
 
 .page-wrapper-img {
-  background-image: url("../images/overlay.jpg");
+  /* background-image: url("../images/overlay.jpg"); */
   background-size: cover;
   background-position: center center;
   min-height: 220px;
@@ -293,7 +293,7 @@ a:hover, a:active, a:focus {
   #searched_game{
     width: 100%;
     top: 215px;
-    //left:-35px;
+    /* left:-35px; */
     padding-left: 105px;
   }
 
@@ -5522,7 +5522,7 @@ th.footable-sortable > span.fooicon {
   overflow: hidden;
   width: 100%;
   height: 100%;
-  background: url(../images/plus.png) no-repeat center center rgba(87, 102, 218, 0.8);
+  /* background: url(../images/plus.png) no-repeat center center rgba(87, 102, 218, 0.8); */
 }
 
 .item-mask p {
@@ -6380,7 +6380,7 @@ tr:first-child > td > .fc-day-grid-event {
 
 .chat-box-right .chat-body {
   padding: 20px;
-  background-image: url("../images/pattern.png");
+  /* background-image: url("../images/pattern.png"); */
   background-repeat: repeat;
   background-attachment: fixed;
   height: 650px;
@@ -6839,7 +6839,7 @@ tr:first-child > td > .fc-day-grid-event {
 
 .cart-promo {
   padding: 90px;
-  background-image: url(../images/products/bg-cart.png);
+  /* background-image: url(../images/products/bg-cart.png); */
   background-position: center center;
   background-size: cover;
 }
@@ -7637,7 +7637,7 @@ tr:first-child > td > .fc-day-grid-event {
 }
 
 .carousel-bg-img {
-  background-image: url("../images/banner2.png");
+  /* background-image: url("../images/banner2.png"); */
   background-position: center center;
   background-size: cover;
   background-repeat: repeat;
@@ -7781,7 +7781,7 @@ tr:first-child > td > .fc-day-grid-event {
 }
 
 .accountbg {
-  background: url("../images/bg-1.jpg");
+  /* background: url("../images/bg-1.jpg"); */
   background-size: cover;
   background-position: center center;
   height: 100%;
@@ -8018,7 +8018,7 @@ tr:first-child > td > .fc-day-grid-event {
 }
 
 .intro {
-  background: url(../images/carousel/bg-1.jpg) no-repeat;
+  /* background: url(../images/carousel/bg-1.jpg) no-repeat; */
   background-size: cover;
 }
 

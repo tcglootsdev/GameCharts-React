@@ -24,84 +24,84 @@ const Dashboard = () => {
         topdata_average: [],
     });
 
-    React.useEffect(() => {
-        $(".desktop-screen").show();
-        try {
-            axios.get("https://gamecharts.org/api/dashboard.php").then((response) => {
-                setDashboardData(response.data);
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    }, []);
+    // React.useEffect(() => {
+    //     $(".desktop-screen").show();
+    //     try {
+    //         axios.get("https://gamecharts.org/api/dashboard.php").then((response) => {
+    //             setDashboardData(response.data);
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // }, []);
 
-    React.useEffect(() => {
-        $(".chart-today").each(function (i, e) {
-            e.innerHTML = "";
-            var options1 = {
-                chart: {
-                    type: "line",
-                    width: 140,
-                    height: 30,
-                    sparkline: {
-                        enabled: true,
-                    },
-                },
-                series: [
-                    {
-                        data: JSON.parse($(this).attr("data-series")),
-                    },
-                ],
-                stroke: {
-                    width: 2,
-                    curve: "smooth",
-                },
-                markers: {
-                    size: 0,
-                },
-                colors: ["#028602"],
-                tooltip: {
-                    fixed: {
-                        enabled: false,
-                    },
-                    x: {
-                        show: false,
-                    },
-                    y: {
-                        title: {
-                            formatter: function (seriesName) {
-                                return "";
-                            },
-                        },
-                    },
-                    marker: {
-                        show: false,
-                    },
-                },
-            };
-            new ApexCharts(e, options1).render();
-        });
-        if (sDashboardData.trending.length > 0) {
-            $("#trending_game_slider").bxSlider({
-                touchEnabled: false,
-            });
-        }
-        if (sDashboardData.topdata.length > 0) {
-            $("#top_game_slider").bxSlider({
-                touchEnabled: false,
-            });
-        }
-        if (sDashboardData.trending_average.length > 0) {
-            $("#trending_game_average_slider").bxSlider({
-                touchEnabled: false,
-            });
-        }
-        if (sDashboardData.topdata_average.length > 0) {
-            $("#top_game_average_slider").bxSlider({
-                touchEnabled: false,
-            });
-        }
-    }, [sDashboardData]);
+    // React.useEffect(() => {
+    //     $(".chart-today").each(function (i, e) {
+    //         e.innerHTML = "";
+    //         var options1 = {
+    //             chart: {
+    //                 type: "line",
+    //                 width: 140,
+    //                 height: 30,
+    //                 sparkline: {
+    //                     enabled: true,
+    //                 },
+    //             },
+    //             series: [
+    //                 {
+    //                     data: JSON.parse($(this).attr("data-series")),
+    //                 },
+    //             ],
+    //             stroke: {
+    //                 width: 2,
+    //                 curve: "smooth",
+    //             },
+    //             markers: {
+    //                 size: 0,
+    //             },
+    //             colors: ["#028602"],
+    //             tooltip: {
+    //                 fixed: {
+    //                     enabled: false,
+    //                 },
+    //                 x: {
+    //                     show: false,
+    //                 },
+    //                 y: {
+    //                     title: {
+    //                         formatter: function (seriesName) {
+    //                             return "";
+    //                         },
+    //                     },
+    //                 },
+    //                 marker: {
+    //                     show: false,
+    //                 },
+    //             },
+    //         };
+    //         new ApexCharts(e, options1).render();
+    //     });
+    //     if (sDashboardData.trending.length > 0) {
+    //         $("#trending_game_slider").bxSlider({
+    //             touchEnabled: false,
+    //         });
+    //     }
+    //     if (sDashboardData.topdata.length > 0) {
+    //         $("#top_game_slider").bxSlider({
+    //             touchEnabled: false,
+    //         });
+    //     }
+    //     if (sDashboardData.trending_average.length > 0) {
+    //         $("#trending_game_average_slider").bxSlider({
+    //             touchEnabled: false,
+    //         });
+    //     }
+    //     if (sDashboardData.topdata_average.length > 0) {
+    //         $("#top_game_average_slider").bxSlider({
+    //             touchEnabled: false,
+    //         });
+    //     }
+    // }, [sDashboardData]);
 
     return (
         <>

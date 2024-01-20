@@ -40,14 +40,14 @@ const Player = (props) => {
         }
     }, [sPage]);
 
-    React.useEffect(() => {
-        if (rBxSlideStatus.current.top_game_slider) {
-            rBxSlideStatus.current.top_game_slider.destroySlider();
-        }
-        rBxSlideStatus.current.top_game_slider = $("#top_game_slider").bxSlider({
-            touchEnabled: false,
-        });
-    }, [sPlayerData]);
+    // React.useEffect(() => {
+    //     if (rBxSlideStatus.current.top_game_slider) {
+    //         rBxSlideStatus.current.top_game_slider.destroySlider();
+    //     }
+    //     rBxSlideStatus.current.top_game_slider = $("#top_game_slider").bxSlider({
+    //         touchEnabled: false,
+    //     });
+    // }, [sPlayerData]);
 
     return (
         <>

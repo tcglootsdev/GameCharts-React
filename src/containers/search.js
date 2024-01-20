@@ -31,53 +31,53 @@ const search = () => {
         }
     }, [searchValue]);
 
-    React.useEffect(() => {
-        $(".chart-today").each(function (i, e) {
-            e.innerHTML = "";
-            var options1 = {
-                chart: {
-                    type: "line",
-                    width: 140,
-                    height: 30,
-                    sparkline: {
-                        enabled: true,
-                    },
-                },
-                series: [
-                    {
-                        data: JSON.parse($(this).attr("data-series")),
-                    },
-                ],
-                stroke: {
-                    width: 2,
-                    curve: "smooth",
-                },
-                markers: {
-                    size: 0,
-                },
-                colors: ["#028602"],
-                tooltip: {
-                    fixed: {
-                        enabled: false,
-                    },
-                    x: {
-                        show: false,
-                    },
-                    y: {
-                        title: {
-                            formatter: function (seriesName) {
-                                return "";
-                            },
-                        },
-                    },
-                    marker: {
-                        show: false,
-                    },
-                },
-            };
-            new ApexCharts(e, options1).render();
-        });
-    }, [sSearchData]);
+    // React.useEffect(() => {
+    //     $(".chart-today").each(function (i, e) {
+    //         e.innerHTML = "";
+    //         var options1 = {
+    //             chart: {
+    //                 type: "line",
+    //                 width: 140,
+    //                 height: 30,
+    //                 sparkline: {
+    //                     enabled: true,
+    //                 },
+    //             },
+    //             series: [
+    //                 {
+    //                     data: JSON.parse($(this).attr("data-series")),
+    //                 },
+    //             ],
+    //             stroke: {
+    //                 width: 2,
+    //                 curve: "smooth",
+    //             },
+    //             markers: {
+    //                 size: 0,
+    //             },
+    //             colors: ["#028602"],
+    //             tooltip: {
+    //                 fixed: {
+    //                     enabled: false,
+    //                 },
+    //                 x: {
+    //                     show: false,
+    //                 },
+    //                 y: {
+    //                     title: {
+    //                         formatter: function (seriesName) {
+    //                             return "";
+    //                         },
+    //                     },
+    //                 },
+    //                 marker: {
+    //                     show: false,
+    //                 },
+    //             },
+    //         };
+    //         new ApexCharts(e, options1).render();
+    //     });
+    // }, [sSearchData]);
 
     return (
         <>

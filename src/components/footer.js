@@ -68,20 +68,20 @@ const Footer = (props) => {
                             <div className="col-6 text-white footer-text">
                                 Supported Platforms
                                 <ul style={{ paddingTop: "10px" }}>
-                                    {Object.keys(sFooterData.stores).map((key) => (
+                                    {/* {Object.keys(sFooterData.stores).map((key) => (
                                         <li key={key} style={{ listStyleType: "none", paddingTop: 5 }}>
                                             <Link className="footer-items" to={"/" + sFooterData.stores[key].Store}>
                                                 {ucfirst(sFooterData.stores[key].Store)}
                                             </Link>
                                         </li>
-                                    ))}
+                                    ))} */}
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div className="col-12 col-md-6 ">
                         <div className="row">
-                            {Object.keys(sFooterData.stores).map((key) => (
+                            {/* {Object.keys(sFooterData.stores).map((key) => (
                                 <div key={key} className="footer-item col-md-6 col-6">
                                     <Link to={"/" + sFooterData.stores[key].Store + "/player_count"}>
                                         Top {ucfirst(sFooterData.stores[key].Store)} Games
@@ -97,7 +97,7 @@ const Footer = (props) => {
                                         ))}
                                     </ul>
                                 </div>
-                            ))}
+                            ))} */}
                         </div>
                     </div>
                 </div>

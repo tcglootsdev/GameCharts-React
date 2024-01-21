@@ -1,16 +1,22 @@
-// Modules
-import React from "react";
+import React, { lazy, Suspense } from "react";
 import { BrowserRouter } from "react-router-dom";
+import { Provider } from "react-redux";
 
-// Routers
-import AppRouter from "./appRouter";
+// Store
+import store from "./redux/store";
+
+// Routes
+import Routes from "./routes";
 
 // Components
-import Navigation from "./components/navigation";
-import Footer from "./components/footer";
+const Navigation = lazy(() => import("./components/navigation"));
+const Footer = lazy(() => import("./components/footer"));
 
 // Styles
 import "./App.css";
+import classNames from "classnames/bind";
+import styles from "./style.module.css";
+const cx = classNames.bind(styles);
 
 const App = () => {
     React.useEffect(() => {
@@ -21,7 +27,6 @@ const App = () => {
         //     }
         //     document.documentElement.setAttribute("data-bs-theme", themeMode);
         // };
-
         // const initSlimscroll = () => {
         //     $(".slimscroll").slimscroll({
         //         height: "auto",
@@ -37,9 +42,7 @@ const App = () => {
         //         $(this).toggleClass("open");
         //         $("#navigation").slideToggle(400);
         //     });
-
         //     $(".navigation-menu>li").slice(-2).addClass("last-elements");
-
         //     $('.navigation-menu li.has-submenu a[href="#"]').on("click", function (e) {
         //         if ($(window).width() < 992) {
         //             e.preventDefault();
@@ -73,18 +76,15 @@ const App = () => {
         //         }
         //     });
         // };
-
         // initTheme();
         // initSlimscroll();
         // initMetisMenu();
         // initLeftMenuCollapse();
         // initEnlarge();
         // initActiveMenu();
-
         // $("body").append(
         //     '<div id="cookie_accept_div" style=\'position:fixed; bottom:0; left:0; right:0; height:50; background-color:#e8ca54;vertical-align: middle; font-size: 20px; text-align: center; display:none;\'>We use cookies to ensure you have the best browsing experience on our website. Please read our <a href="https://gamecharts.org/privacy">cookie policy</a> for more information about how we use cookies. <a id="accept_cookie" href="javascript:void(0)">OK</a></div>'
         // );
-
         //console.log($.cookie("accept_cookie"));
         // if (!$.cookie("accept_cookie")) {
         //     $("#cookie_accept_div").show();
@@ -94,24 +94,26 @@ const App = () => {
         //     $.cookie("accept_cookie", true);
         //     $("#cookie_accept_div").hide();
         // });
-
         // window.dataLayer = window.dataLayer || [];
         // function gtag() {
         //     dataLayer.push(arguments);
         // }
         // gtag("js", new Date());
-
         // gtag("config", "UA-43282477-5");
     }, []);
 
     return (
-        <React.StrictMode>
+        <Provider store={store}>
             <BrowserRouter>
-                <Navigation />
-                <AppRouter />
-                <Footer />
+                <Suspense>
+                    <Navigation />
+                    <div className={cx('content-wrapper')}>
+                        <Routes />
+                    </div>
+                    <Footer />
+                </Suspense>
             </BrowserRouter>
-        </React.StrictMode>
+        </Provider>
     );
 };
 

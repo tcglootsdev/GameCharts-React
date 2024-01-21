@@ -3,11 +3,13 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 
 // Styles
-import styles from "./navigation.module.css";
-import classnames from "classnames/bind";
-const cx = classnames.bind(styles);
+// import styles from "./navigation.module.css";
+// import classnames from "classnames/bind";
+// const cx = classnames.bind(styles);
 
-const Navigation = () => {
+const { PUBLIC_URL } = process.env;
+
+const Navigation = (props) => {
     const navigate = useNavigate();
     const [sCurrentTheme, setCurrentTheme] = React.useState("light");
     // React.useEffect(() => {
@@ -100,13 +102,7 @@ const Navigation = () => {
     return (
         <nav className={"navbar navbar-expand-lg navbar-light bg-gradient-green fixed-top"}>
             <Link to={"/"}>
-                <img
-                    src="https://gamecharts.org/assets/images/logo-1.png"
-                    className="logoGameCharts"
-                    alt="Game Charts logo"
-                    width="235px"
-                    height="60px"
-                />
+                <img src={PUBLIC_URL + "/assets/images/logo-1.png"} className="logoGameCharts" alt="Game Charts logo" width="235px" height="60px" />
             </Link>
             <button
                 className="navbar-toggler"

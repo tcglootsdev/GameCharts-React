@@ -1,15 +1,15 @@
-// Modules
+import { lazy, Suspense } from "react";
 import { useRoutes } from "react-router-dom";
 
 // Containers
-import Dashboard from "./containers/dashboard";
-import Platform from "./containers/platform";
-import Game from "./containers/game";
-import Search from "./containers/search";
-import Player from "./containers/player";
-import About from "./containers/about";
-import Privacy from "./containers/privacy";
-import Cookies from "./containers/cookies";
+const Dashboard = lazy(() => import("@/containers/dashboard"));
+const Platform = lazy(() => import("@/containers/platform"));
+const Game = lazy(() => import("@/containers/game"));
+const Search = lazy(() => import("@/containers/search"));
+const Player = lazy(() => import("@/containers/player"));
+const About = lazy(() => import("@/containers/about"));
+const Privacy = lazy(() => import("@/containers/privacy"));
+const Cookies = lazy(() => import("@/containers/cookies"));
 
 const AppRouter = () => {
     return useRoutes([

@@ -132,7 +132,7 @@ const Navigation = (props) => {
                         </div>
                     </li>
                 </ul>
-                <div className="dropdown ml-2">
+                {/* <div className="dropdown ml-2">
                     <button type="button" className="btn dropdown-toggle" data-toggle="dropdown">
                         {sCurrentTheme === "light" && <i className="fa fa-sun"></i>}
                         {sCurrentTheme === "dark" && <i className="fa fa-moon"></i>}
@@ -145,7 +145,7 @@ const Navigation = (props) => {
                             <i className="fa fa-moon mr-3"></i>Dark
                         </a>
                     </div>
-                </div>
+                </div> */}
             </div>
         </nav>
     );

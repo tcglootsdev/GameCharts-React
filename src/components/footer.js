@@ -11,15 +11,15 @@ const Footer = (props) => {
         stores: {},
     });
 
-    React.useEffect(() => {
-        try {
-            axios.get("https://gamecharts.org/api/dashboard.php").then((response) => {
-                setFooterData(response.data);
-            });
-        } catch (error) {
-            console.log(error.message);
-        }
-    }, []);
+    // React.useEffect(() => {
+    //     try {
+    //         axios.get("https://gamecharts.org/api/dashboard.php").then((response) => {
+    //             setFooterData(response.data);
+    //         });
+    //     } catch (error) {
+    //         console.log(error.message);
+    //     }
+    // }, []);
 
     return (
         <footer className="section footer-classic context-dark bg-image" style={{ background: "#2d3246" }}>

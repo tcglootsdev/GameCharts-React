@@ -25,7 +25,7 @@ const Table = ({ columnsDef, columns, data, language, loading, emptyOpts }) => {
     }, []);
 
     return (
-        <div className="table-responsive">
+        <div className="table-responsive position-relative">
             <table className="table table-centered mb-0">
                 <thead className="thead-light">
                     <tr>

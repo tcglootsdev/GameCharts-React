@@ -32,7 +32,6 @@ const reducer = handleActions(
         [types.GET_DASHBOARD_DATA_FAIL]: (state, action) => ({
             ...state,
             loading: false,
-            error: action.payload,
         }),
     },
     initialState

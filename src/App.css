@@ -2090,7 +2090,6 @@ small {
 
 .card {
     width: 100%;
-    margin-bottom: 20px;
     border: none;
     -webkit-box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.02);
     box-shadow: 0 0 24px 0 rgba(0, 0, 0, 0.06), 0 1px 0 0 rgba(0, 0, 0, 0.02);
@@ -8273,20 +8272,6 @@ tr:first-child > td > .fc-day-grid-event {
     width: 100%;
 }
 
-.game-menu {
-    background: -o-linear-gradient(top, #222e48 0%, #2f394e 50%, #202633 100%);
-    background: linear-gradient(to bottom, #222e48 0%, #2f394e 50%, #202633 100%);
-    background-blend-mode: normal, color-burn;
-    -webkit-box-shadow: inset 0px 2px 14px 0px rgba(0, 0, 0, 0.25);
-    box-shadow: inset 0px 2px 14px 0px rgba(0, 0, 0, 0.25);
-    color: white;
-}
-
-.game-menu h1 {
-    font-size: 3rem;
-    line-height: 1;
-}
-
 .text-shadow {
     text-shadow: 1px 3px 5px rgba(0, 0, 0, 0.3);
 }
@@ -8325,35 +8310,6 @@ tr:first-child > td > .fc-day-grid-event {
     object-fit: contain;
 }
 
-.game-img {
-    max-width: 100%;
-    height: auto;
-}
-.game-img img {
-    max-height: 215px;
-}
-
-@media (max-width: 459.98px) {
-    .game-img img {
-        width: 100vw;
-        height: auto;
-        object-fit: cover;
-    }
-}
-
-@media (min-width: 992px) and (max-width: 1459.98px) {
-    .game-img img {
-        max-width: 30vw;
-        height: auto;
-        object-fit: cover;
-    }
-}
-
-@media (min-width: 1460px) {
-    .game-info {
-        width: calc(100vw - 460px);
-    }
-}
 .line {
     height: 1px;
 }
@@ -8381,6 +8337,8 @@ tr:first-child > td > .fc-day-grid-event {
     margin-top: 70px;
     padding: 10px 6em;
     background: rgb(40, 50, 68);
+    height: 70px;
+    align-items: center;
 }
 .route {
     position: absolute;
@@ -8412,6 +8370,7 @@ tr:first-child > td > .fc-day-grid-event {
 }
 .game-platforms-menu {
     margin-left: 2em;
+    width: 150px;
 }
 .bg-light {
     width: 52.2%;
@@ -8465,7 +8424,7 @@ tr:first-child > td > .fc-day-grid-event {
 .route-top {
     float: left;
     margin-left: 3em;
-    margin-top: 1em;
+    /* margin-top: 1em; */
 }
 .route-top i {
     color: white;
@@ -8522,9 +8481,6 @@ tr:first-child > td > .fc-day-grid-event {
         width: 100%;
         margin: 0 2em;
     }
-    .game-menu h1 {
-        font-size: 2rem;
-    }
 }
 @media (max-width: 768px) {
     .bg-light {
@@ -8538,9 +8494,6 @@ tr:first-child > td > .fc-day-grid-event {
     }
     .game-platforms-menu {
         margin-left: 0;
-    }
-    .game-menu h1 {
-        font-size: 1.5rem !important;
     }
     .font-secondary {
         font-size: 1em;
@@ -8569,12 +8522,9 @@ tr:first-child > td > .fc-day-grid-event {
 @media (max-width: 445px) {
     .route-top {
         margin-left: 1em !important;
-        margin-top: 1.7em;
+        /* margin-top: 1.7em; */
     }
     #searched_game_old {
         width: 100%;
-    }
-    .game-menu h1 {
-        font-size: 1rem !important;
     }
 }

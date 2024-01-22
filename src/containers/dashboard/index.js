@@ -8,9 +8,10 @@ import { getDashboardData } from "@/redux/dashboard/actions";
 
 // Components
 const Table = lazy(() => import("@/components/table"));
+const Slider = lazy(() => import("@/components/slider"));
 
 // Helpers
-import { apexChtSeries } from "@/helpers/utils";
+import { apexChtSeries, stripTags } from "@/helpers/utils";
 import { todayChartOptions as tdyChtOpts } from "@/helpers/constants";
 
 const Dashboard = () => {
@@ -20,85 +21,6 @@ const Dashboard = () => {
     React.useEffect(() => {
         dispatch(getDashboardData());
     }, [dispatch]);
-
-    // React.useEffect(() => {
-    //     $(".desktop-screen").show();
-    //     try {
-    //         axios.get("https://gamecharts.org/api/dashboard.php").then((response) => {
-    //             setDashboardData(response.data);
-    //         });
-    //     } catch (error) {
-    //         console.log(error.message);
-    //     }
-    // }, []);
-
-    // React.useEffect(() => {
-    //     $(".chart-today").each(function (i, e) {
-    //         e.innerHTML = "";
-    //         var options1 = {
-    //             chart: {
-    //                 type: "line",
-    //                 width: 140,
-    //                 height: 30,
-    //                 sparkline: {
-    //                     enabled: true,
-    //                 },
-    //             },
-    //             series: [
-    //                 {
-    //                     data: JSON.parse($(this).attr("data-series")),
-    //                 },
-    //             ],
-    //             stroke: {
-    //                 width: 2,
-    //                 curve: "smooth",
-    //             },
-    //             markers: {
-    //                 size: 0,
-    //             },
-    //             colors: ["#028602"],
-    //             tooltip: {
-    //                 fixed: {
-    //                     enabled: false,
-    //                 },
-    //                 x: {
-    //                     show: false,
-    //                 },
-    //                 y: {
-    //                     title: {
-    //                         formatter: function (seriesName) {
-    //                             return "";
-    //                         },
-    //                     },
-    //                 },
-    //                 marker: {
-    //                     show: false,
-    //                 },
-    //             },
-    //         };
-    //         new ApexCharts(e, options1).render();
-    //     });
-    //     if (dashboardData.trending.length > 0) {
-    //         $("#trending_game_slider").bxSlider({
-    //             touchEnabled: false,
-    //         });
-    //     }
-    //     if (dashboardData.topdata.length > 0) {
-    //         $("#top_game_slider").bxSlider({
-    //             touchEnabled: false,
-    //         });
-    //     }
-    //     if (dashboardData.trending_average.length > 0) {
-    //         $("#trending_game_average_slider").bxSlider({
-    //             touchEnabled: false,
-    //         });
-    //     }
-    //     if (dashboardData.topdata_average.length > 0) {
-    //         $("#top_game_average_slider").bxSlider({
-    //             touchEnabled: false,
-    //         });
-    //     }
-    // }, [dashboardData]);
 
     const mTrdGmesTblDta = React.useMemo(() => {
         const trdGmesTblDta = [];
@@ -128,10 +50,116 @@ const Dashboard = () => {
             );
             row.change = trdGme.change;
             row.hist = <Chart options={tdyChtOpts} series={apexChtSeries(trdGme.hist)} width={140} height={30} />;
-            row.ccu = dashboardData.trending[i].ccu;
+            row.ccu = trdGme.ccu;
             trdGmesTblDta.push(row);
         }
         return trdGmesTblDta;
+    }, [dashboardData]);
+
+    const mTopGmesTblDta = React.useMemo(() => {
+        const topGmesTblDta = [];
+        if (typeof dashboardData !== "object") return topGmesTblDta;
+        if (!Array.isArray(dashboardData.topdata)) return topGmesTblDta;
+
+        for (let i = 0; i < dashboardData.topdata.length; i++) {
+            const topGme = dashboardData.topdata[i];
+            const row = {};
+            row.key = topGme.Name;
+            row.index = i + 1 + ".";
+            row.name = (
+                <Link className="text-dark" to={"/" + topGme.Store + "/" + topGme.NameSEO}>
+                    {topGme.Name}
+                </Link>
+            );
+            row.store = (
+                <Link to={"/" + topGme.Store}>
+                    <img
+                        className="lazyload blur-up"
+                        width="100%"
+                        height="100%"
+                        src={dashboardData.stores[topGme.Store].Splash}
+                        alt={dashboardData.stores[topGme.Store].Store}
+                        style={{ maxWidth: 75, maxHeight: 30 }}
+                    />
+                </Link>
+            );
+            row.LastCcu = Number(topGme.LastCcu).toLocaleString();
+            row.TopCcu24h = Number(topGme.TopCcu24h).toLocaleString();
+            row.TopCcu30d = Number(topGme.TopCcu30d).toLocaleString();
+            row.TopCcu = Number(topGme.TopCcu).toLocaleString();
+            topGmesTblDta.push(row);
+        }
+        return topGmesTblDta;
+    }, [dashboardData]);
+
+    const mTrdGmesAvgTblDta = React.useMemo(() => {
+        const trdGmesAvgTblDta = [];
+        if (typeof dashboardData !== "object") return trdGmesAvgTblDta;
+        if (!Array.isArray(dashboardData.trending_average)) return trdGmesAvgTblDta;
+
+        for (let i = 0; i < dashboardData.trending_average.length; i++) {
+            const trdGmeAvg = dashboardData.trending_average[i];
+            const row = {};
+            row.key = trdGmeAvg.Name;
+            row.name = (
+                <Link className="text-dark" to={"/" + trdGmeAvg.store + "/" + trdGmeAvg.app_id}>
+                    {trdGmeAvg.name}
+                </Link>
+            );
+            row.store = (
+                <Link to={"/" + trdGmeAvg.store}>
+                    <img
+                        className="lazyload blur-up"
+                        width="100%"
+                        height="100%"
+                        src={dashboardData.stores[trdGmeAvg.store].Splash}
+                        alt={dashboardData.stores[trdGmeAvg.store].Store}
+                        style={{ maxWidth: 75, maxHeight: 30 }}
+                    />
+                </Link>
+            );
+            row.change = trdGmeAvg.change;
+            row.hist = <Chart options={tdyChtOpts} series={apexChtSeries(trdGmeAvg.hist)} width={140} height={30} />;
+            row.ccu = trdGmeAvg.ccu;
+            trdGmesAvgTblDta.push(row);
+        }
+        return trdGmesAvgTblDta;
+    }, [dashboardData]);
+
+    const mTopGmesAvgTblDta = React.useMemo(() => {
+        const topGmesAvgTblDta = [];
+        if (typeof dashboardData !== "object") return topGmesAvgTblDta;
+        if (!Array.isArray(dashboardData.topdata_average)) return topGmesAvgTblDta;
+
+        for (let i = 0; i < dashboardData.topdata_average.length; i++) {
+            const topGmeAvg = dashboardData.topdata_average[i];
+            const row = {};
+            row.key = topGmeAvg.Name;
+            row.index = i + 1 + ".";
+            row.name = (
+                <Link className="text-dark" to={"/" + topGmeAvg.Store + "/" + topGmeAvg.NameSEO}>
+                    {topGmeAvg.Name}
+                </Link>
+            );
+            row.store = (
+                <Link to={"/" + topGmeAvg.Store}>
+                    <img
+                        className="lazyload blur-up"
+                        width="100%"
+                        height="100%"
+                        src={dashboardData.stores[topGmeAvg.Store].Splash}
+                        alt={dashboardData.stores[topGmeAvg.Store].Store}
+                        style={{ maxWidth: 75, maxHeight: 30 }}
+                    />
+                </Link>
+            );
+            row.LastCcu = Number(topGmeAvg.LastCcu).toLocaleString();
+            row.MaxAvg24h = Number(topGmeAvg.MaxAvg24h).toLocaleString();
+            row.MaxAvg30d = Number(topGmeAvg.MaxAvg30d).toLocaleString();
+            row.MaxAvg = Number(topGmeAvg.MaxAvg).toLocaleString();
+            topGmesAvgTblDta.push(row);
+        }
+        return topGmesAvgTblDta;
     }, [dashboardData]);
 
     return (
@@ -155,348 +183,246 @@ const Dashboard = () => {
                 <div className="desktop-ads-column-left"></div>
                 <div className="desktop-ads-column-right"></div>
                 <div className="row">
-                    <div className="col-12">
-                        <div className="card">
-                            <div className="card-header bg-gradient-grey">
-                                <div className="row justify-content-between">
-                                    <h3 className="h5 font-secondary text-uppercase m-0">Trending Games</h3>
-                                    <h4 className="h5 font-secondary text-uppercase text-white m-0">By CurrentPlayers</h4>
-                                </div>
+                    <div className="card">
+                        <div className="card-header bg-gradient-grey">
+                            <div className="row justify-content-between">
+                                <h3 className="h5 font-secondary text-uppercase m-0">Trending Games</h3>
+                                <h4 className="h5 font-secondary text-uppercase text-white m-0">By CurrentPlayers</h4>
                             </div>
-                            <div className="card-body p-0">
-                                <Table
-                                    loading={dashboardData.loading}
-                                    columns={[
-                                        { name: "Name", data: "name" },
-                                        { name: "Platform", data: "store" },
-                                        { name: "24-hour Change", data: "change", className: "text-center" },
-                                        { name: "Today", data: "hist", className: "text-center" },
-                                        { name: "Current Players", data: "ccu", className: "text-center" },
-                                    ]}
-                                    data={mTrdGmesTblDta}
-                                    columnsDef={[
-                                        { target: 2, className: "text-success text-center font-weight-900" },
-                                        { target: 4, className: "text-center text-gray" },
-                                    ]}
-                                    emptyOpts={{
-                                        row: 10,
-                                    }}
-                                />
-                            </div>
+                        </div>
+                        <div className="card-body p-0">
+                            <Table
+                                loading={dashboardData.loading}
+                                columns={[
+                                    { name: "Name", data: "name" },
+                                    { name: "Platform", data: "store" },
+                                    { name: "24-hour Change", data: "change", className: "text-center" },
+                                    { name: "Today", data: "hist", className: "text-center" },
+                                    { name: "Current Players", data: "ccu", className: "text-center" },
+                                ]}
+                                data={mTrdGmesTblDta}
+                                columnsDef={[
+                                    { target: 2, className: "text-success text-center font-weight-900" },
+                                    { target: 4, className: "text-center text-gray" },
+                                ]}
+                                emptyOpts={{
+                                    row: 10,
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
+                <div className="row mt-3">
+                    <Slider loading={dashboardData.loading} emptyOpts={{ height: 215 }}>
+                        {dashboardData.trending.map((data) => (
+                            <div key={data.name} className="row ml-0 mr-1">
+                                <div className="col-12 col-md-5 d-inline-block p-0">
+                                    <Link to={"/" + data.store + "/" + data.app_id}>
+                                        <img
+                                            className="lazyload blur-up"
+                                            width="100%"
+                                            height="100%"
+                                            src={Array.isArray(data.i_game) && data.i_game[0].Splash}
+                                            alt={data.name}
+                                        />
+                                    </Link>
+                                </div>
 
-                {/* <div className="row">
-                    <div className="col-12">
-                        <div id="trending_game_slider" className="trending_game_slider">
-                            {dashboardData.trending.map((data) => (
-                                <div key={data.name} className="row ml-0 mr-1">
-                                    <div style={{ display: "inline-block", padding: 0 }} className="col-12 col-md-5">
-                                        <Link to={"/" + data.store + "/" + data.app_id}>
-                                            <img
-                                                className="lazyload blur-up"
-                                                width="100%"
-                                                height="100%"
-                                                data-src={Array.isArray(data.i_game) && data.i_game[0].Splash}
-                                                alt={data.name}
-                                            />
-                                        </Link>
-                                    </div>
-
-                                    <div
-                                        style={{ display: "inline-block", padding: 0, height: "215px", overflowY: "scroll" }}
-                                        className="col-sm-12 col-md-7"
-                                    >
-                                        <div style={{ marginLeft: 3, marginRight: 3 }}>
-                                            {stripTags(Array.isArray(data.i_game) ? data.i_game[0].AboutGame : "")}
-                                        </div>
+                                <div
+                                    style={{ display: "inline-block", padding: 0, height: "215px", overflowY: "scroll" }}
+                                    className="col-sm-12 col-md-7"
+                                >
+                                    <div style={{ marginLeft: 3, marginRight: 3 }}>
+                                        {stripTags(Array.isArray(data.i_game) ? data.i_game[0].AboutGame : "")}
                                     </div>
                                 </div>
-                            ))}
+                            </div>
+                        ))}
+                    </Slider>
+                </div>
+                <div className="row mt-3">
+                    <div className="card">
+                        <div className="card-header bg-gradient-grey">
+                            <div className="row justify-content-between">
+                                <h3 className="h5 font-secondary text-uppercase m-0">Top Games</h3>
+                                <h4 className="h5 font-secondary text-uppercase text-white m-0">By Current Players</h4>
+                            </div>
+                        </div>
+                        <div className="card-body p-0">
+                            <Table
+                                loading={dashboardData.loading}
+                                columns={[
+                                    { name: "", data: "index" },
+                                    { name: "Name", data: "name" },
+                                    { name: "Platform", data: "store" },
+                                    { name: "Current Players", data: "LastCcu", className: "text-center" },
+                                    { name: "24-hour peak", data: "TopCcu24h", className: "text-center" },
+                                    { name: "30-days peak", data: "TopCcu30d", className: "text-center" },
+                                    { name: "Peak Players", data: "TopCcu", className: "text-center" },
+                                ]}
+                                data={mTopGmesTblDta}
+                                columnsDef={[
+                                    {
+                                        target: [2, 3, 4, 5],
+                                        className: "text-center",
+                                    },
+                                ]}
+                                emptyOpts={{
+                                    row: 10,
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
+                <div className="row mt-3">
+                    <Slider loading={dashboardData.loading} emptyOpts={{ height: 215 }}>
+                        {dashboardData.topdata.map((data) => (
+                            <div key={data.Name} className="row ml-0 mr-1">
+                                <div style={{ display: "inline-block", padding: 0 }} className="col-12 col-md-5">
+                                    <Link to={"/" + data.Store + "/" + data.NameSEO}>
+                                        <img
+                                            className="lazyload blur-up"
+                                            width="100%"
+                                            height="100%"
+                                            src={Array.isArray(data.i_game) && data.i_game[0].Splash}
+                                            alt={data.Name}
+                                        />
+                                    </Link>
+                                </div>
 
-                <div className="row">
-                    <div className="col-12">
-                        <div className="card">
-                            <div className="card-header bg-gradient-grey">
-                                <div className="row justify-content-between">
-                                    <h3 className="h5 font-secondary text-uppercase m-0">Top Games</h3>
-                                    <h4 className="h5 font-secondary text-uppercase text-white m-0">By Current Players</h4>
+                                <div style={{ display: "inline-block", padding: 0, height: 215, overflowY: "scroll" }} className="col-sm-12 col-md-7">
+                                    <div style={{ marginLeft: 3, marginRight: 3 }}>
+                                        {stripTags(Array.isArray(data.i_game) ? data.i_game[0].AboutGame : "")}
+                                    </div>
                                 </div>
                             </div>
-                            <div className="card-body p-0">
-                                <div className="table-responsive">
-                                    <table className="table table-centered mb-0">
-                                        <thead className="thead-light">
-                                            <tr>
-                                                <th></th>
-                                                <th>Name</th>
-                                                <th>Platform</th>
-                                                <th className="text-center">Current Players</th>
-                                                <th className="text-center">24-hour peak</th>
-                                                <th className="text-center">30-days peak</th>
-                                                <th className="text-center">Peak Players</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {dashboardData.topdata.length > 0 &&
-                                                dashboardData.topdata.map((data, index) => (
-                                                    <tr key={data.Name}>
-                                                        <td>{index + 1}.</td>
-                                                        <td>
-                                                            <Link className="text-dark" to={"/" + data.Store + "/" + data.NameSEO}>
-                                                                {data.Name}
-                                                            </Link>
-                                                        </td>
-                                                        <td>
-                                                            <Link to={"/" + data.Store}>
-                                                                <img
-                                                                    className="lazyload blur-up"
-                                                                    width="100%"
-                                                                    height="100%"
-                                                                    src={dashboardData.stores[data.Store].Splash}
-                                                                    alt={dashboardData.stores[data.Store].Store}
-                                                                    style={{ maxWidth: 75, maxHeight: 30 }}
-                                                                />
-                                                            </Link>
-                                                        </td>
-                                                        <td className="text-center">{Number(data.LastCcu).toLocaleString()}</td>
-                                                        <td className="text-center text-gray">{Number(data.TopCcu24h).toLocaleString()}</td>
-                                                        <td className="text-center text-gray">{Number(data.TopCcu30d).toLocaleString()}</td>
-                                                        <td className="text-center text-gray">{Number(data.TopCcu).toLocaleString()}</td>
-                                                    </tr>
-                                                ))}
-                                            {dashboardData.topdata.length === 0 && (
-                                                <tr>
-                                                    <td colSpan="5"> Not Games Found </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
+                        ))}
+                    </Slider>
+                </div>
+                <div className="row mt-3">
+                    <div className="card">
+                        <div className="card-header bg-gradient-grey">
+                            <div className="row justify-content-between">
+                                <h3 className="h5 font-secondary text-uppercase m-0">Trending Games</h3>
+                                <h4 className="h5 font-secondary text-uppercase text-white m-0">By Average Players</h4>
                             </div>
+                        </div>
+                        <div className="card-body p-0">
+                            <Table
+                                loading={dashboardData.loading}
+                                columns={[
+                                    { name: "Name", data: "name" },
+                                    { name: "Platform", data: "store" },
+                                    { name: "24-hour Change", data: "change" },
+                                    { name: "Today", data: "hist" },
+                                    { name: "Current Players", data: "ccu" },
+                                ]}
+                                data={mTrdGmesAvgTblDta}
+                                columnsDef={[
+                                    {
+                                        target: 2,
+                                        className: "text-success text-center font-weight-900",
+                                    },
+                                    {
+                                        target: 4,
+                                        className: "text-center text-gray",
+                                    },
+                                ]}
+                                emptyOpts={{
+                                    row: 10,
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
+                <div className="row mt-3">
+                    <Slider loading={dashboardData.loading} emptyOpts={{ height: 215 }}>
+                        {dashboardData.trending_average.map((data) => (
+                            <div key={data.name} className="row ml-1 mr-1">
+                                <div style={{ display: "inline-block", padding: 0 }} className="col-12 col-md-5">
+                                    <Link to={"/" + data.store + "/" + data.app_id}>
+                                        <img
+                                            className="lazyload blur-up"
+                                            width="100%"
+                                            height="100%"
+                                            src={Array.isArray(data.i_game) && data.i_game[0].Splash}
+                                            alt={data.name}
+                                        />
+                                    </Link>
+                                </div>
 
-                <div className="row">
-                    <div className="col-12">
-                        <div id="top_game_slider" className="top_game_slider">
-                            {dashboardData.topdata.map((data) => (
-                                <div key={data.Name} className="row ml-0 mr-1">
-                                    <div style={{ display: "inline-block", padding: 0 }} className="col-12 col-md-5">
-                                        <Link to={"/" + data.Store + "/" + data.NameSEO}>
-                                            <img
-                                                className="lazyload blur-up"
-                                                width="100%"
-                                                height="100%"
-                                                data-src={Array.isArray(data.i_game) && data.i_game[0].Splash}
-                                                alt={data.Name}
-                                            />
-                                        </Link>
-                                    </div>
-
-                                    <div
-                                        style={{ display: "inline-block", padding: 0, height: 215, overflowY: "scroll" }}
-                                        className="col-sm-12 col-md-7"
-                                    >
-                                        <div style={{ marginLeft: 3, marginRight: 3 }}>
-                                            {stripTags(Array.isArray(data.i_game) ? data.i_game[0].AboutGame : "")}
-                                        </div>
+                                <div style={{ display: "inline-block", padding: 0, height: 215, overflowY: "scroll" }} className="col-sm-12 col-md-7">
+                                    <div className="" style={{ marginLeft: 3, marginRight: 3 }}>
+                                        {stripTags(Array.isArray(data.i_game) ? data.i_game[0].AboutGame : "")}
                                     </div>
                                 </div>
-                            ))}
+                            </div>
+                        ))}
+                    </Slider>
+                </div>
+                <div className="row mt-3">
+                    <div className="card">
+                        <div className="card-header bg-gradient-grey">
+                            <div className="row justify-content-between">
+                                <h3 className="h5 font-secondary text-uppercase m-0">Top Games</h3>
+                                <h4 className="h5 font-secondary text-uppercase text-white m-0">By Average Players</h4>
+                            </div>
+                        </div>
+                        <div className="card-body p-0">
+                            <Table
+                                loading={dashboardData.loading}
+                                columns={[
+                                    { name: "", data: "index" },
+                                    { name: "Name", data: "name" },
+                                    { name: "Platform", data: "store" },
+                                    { name: "Average Players", data: "LastCcu", className: "text-center" },
+                                    { name: "24-hour Average", data: "MaxAvg24h", className: "text-center" },
+                                    { name: "30-days Average", data: "MaxAvg30d", className: "text-center" },
+                                    { name: "Max Average Players", data: "MaxAvg", className: "text-center" },
+                                ]}
+                                data={mTopGmesAvgTblDta}
+                                columnsDef={[
+                                    {
+                                        target: [3, 4, 5, 6],
+                                        className: "text-center",
+                                    },
+                                    {
+                                        taget: [4, 5, 6],
+                                        className: "text-gray",
+                                    },
+                                ]}
+                                emptyOpts={{
+                                    row: 10,
+                                }}
+                            />
                         </div>
                     </div>
                 </div>
-                <div className="row">
-                    <div className="col-12">
-                        <div className="card">
-                            <div className="card-header bg-gradient-grey">
-                                <div className="row justify-content-between">
-                                    <h3 className="h5 font-secondary text-uppercase m-0">Trending Games</h3>
-                                    <h4 className="h5 font-secondary text-uppercase text-white m-0">By Average Players</h4>
+                <div className="row mt-3 mb-3">
+                    <Slider loading={dashboardData.loading} emptyOpts={{ height: 215 }}>
+                        {dashboardData.topdata_average.map((data) => (
+                            <div key={data.Name} className="row ml-0 mr-1">
+                                <div style={{ display: "inline-block", padding: 0 }} className="col-12 col-md-5">
+                                    <Link to={"/" + data.Store + "/" + data.NameSEO}>
+                                        <img
+                                            className="lazyload blur-up"
+                                            width="100%"
+                                            height="100%"
+                                            src={Array.isArray(data.i_game) && data.i_game[0].Splash}
+                                            alt={data.Name}
+                                        />
+                                    </Link>
                                 </div>
-                            </div>
-                            <div className="card-body p-0">
-                                <div className="table-responsive">
-                                    <table className="table table-centered mb-0">
-                                        <thead className="thead-light">
-                                            <tr>
-                                                <th>Name</th>
-                                                <th>Platform</th>
-                                                <th className="text-center">24-hour Change</th>
-                                                <th className="text-center">Today</th>
-                                                <th className="text-center">Current Players</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {dashboardData.trending_average.length > 0 &&
-                                                dashboardData.trending_average.map((data) => (
-                                                    <tr key={data.name}>
-                                                        <td>
-                                                            <Link className="text-dark" to={"/" + data.store + "/" + data.app_id}>
-                                                                {data.name}
-                                                            </Link>
-                                                        </td>
-                                                        <td>
-                                                            <Link to={"/" + data.store}>
-                                                                <img
-                                                                    className="lazyload blur-up"
-                                                                    width="100%"
-                                                                    height="100%"
-                                                                    src={dashboardData.stores[data.store].Splash}
-                                                                    alt={dashboardData.stores[data.store].Store}
-                                                                    style={{ maxWidth: 75, maxHeight: 30 }}
-                                                                />
-                                                            </Link>
-                                                        </td>
-                                                        <td className="text-success text-center font-weight-900">{data.change}</td>
-                                                        <td>
-                                                            <div className="chart-today text-center" data-series={JSON.stringify(data.hist)}></div>
-                                                        </td>
-                                                        <td className="text-center text-gray">{data.ccu}</td>
-                                                    </tr>
-                                                ))}
-                                            {dashboardData.trending_average.length === 0 && (
-                                                <tr>
-                                                    <td colSpan="5"> Not Games Found </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
 
-                <div className="row">
-                    <div className="col-12">
-                        <div id="trending_game_average_slider" className="trending_game_slider">
-                            {dashboardData.trending_average.map((data) => (
-                                <div key={data.name} className="row ml-1 mr-1">
-                                    <div style={{ display: "inline-block", padding: 0 }} className="col-12 col-md-5">
-                                        <Link to={"/" + data.store + "/" + data.app_id}>
-                                            <img
-                                                className="lazyload blur-up"
-                                                width="100%"
-                                                height="100%"
-                                                data-src={Array.isArray(data.i_game) && data.i_game[0].Splash}
-                                                alt={data.name}
-                                            />
-                                        </Link>
+                                <div style={{ display: "inline-block", padding: 0, height: 215, overflowY: "scroll" }} className="col-sm-12 col-md-7">
+                                    <div style={{ marginLeft: 3, marginRight: 3 }}>
+                                        {stripTags(Array.isArray(data.i_game) ? data.i_game[0].AboutGame : "")}
                                     </div>
-
-                                    <div
-                                        style={{ display: "inline-block", padding: 0, height: 215, overflowY: "scroll" }}
-                                        className="col-sm-12 col-md-7"
-                                    >
-                                        <div className="" style={{ marginLeft: 3, marginRight: 3 }}>
-                                            {stripTags(Array.isArray(data.i_game) ? data.i_game[0].AboutGame : "")}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div>
-                <div className="row">
-                    <div className="col-12">
-                        <div className="card">
-                            <div className="card-header bg-gradient-grey">
-                                <div className="row justify-content-between">
-                                    <h3 className="h5 font-secondary text-uppercase m-0">Top Games</h3>
-                                    <h4 className="h5 font-secondary text-uppercase text-white m-0">By Average Players</h4>
                                 </div>
                             </div>
-                            <div className="card-body p-0">
-                                <div className="table-responsive">
-                                    <table className="table table-centered mb-0">
-                                        <thead className="thead-light">
-                                            <tr>
-                                                <th></th>
-                                                <th>Name</th>
-                                                <th>Platform</th>
-                                                <th className="text-center">Average Players</th>
-                                                <th className="text-center">24-hour Average</th>
-                                                <th className="text-center">30-days Average</th>
-                                                <th className="text-center">Max Average Players</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody>
-                                            {dashboardData.topdata_average.length > 0 &&
-                                                dashboardData.topdata_average.map((data, index) => (
-                                                    <tr key={data.Name}>
-                                                        <td>{index + 1}.</td>
-                                                        <td>
-                                                            <Link className="text-dark" to={"/" + data.Store + "/" + data.NameSEO}>
-                                                                {data.Name}
-                                                            </Link>
-                                                        </td>
-                                                        <td>
-                                                            <Link to={"/" + data.Store}>
-                                                                <img
-                                                                    className="lazyload blur-up"
-                                                                    width="100%"
-                                                                    height="100%"
-                                                                    src={dashboardData.stores[data.Store].Splash}
-                                                                    style={{ maxWidth: 75, maxHeight: 30 }}
-                                                                    alt={"Go to " + data.Name + " site"}
-                                                                />
-                                                            </Link>
-                                                        </td>
-                                                        <td className="text-center">{Number(data.LastCcu).toLocaleString()}</td>
-                                                        <td className="text-center text-gray">{Number(data.MaxAvg24h).toLocaleString()}</td>
-                                                        <td className="text-center text-gray">{Number(data.MaxAvg30d).toLocaleString()}</td>
-                                                        <td className="text-center text-gray">{Number(data.MaxAvg).toLocaleString()}</td>
-                                                    </tr>
-                                                ))}
-                                            {dashboardData.topdata_average.length === 0 && (
-                                                <tr>
-                                                    <td colSpan="5"> Not Games Found </td>
-                                                </tr>
-                                            )}
-                                        </tbody>
-                                    </table>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                        ))}
+                    </Slider>
                 </div>
-                <div className="row">
-                    <div className="col-12">
-                        <div id="top_game_average_slider" className="top_game_slider">
-                            {dashboardData.topdata_average.map((data) => (
-                                <div key={data.Name} className="row ml-0 mr-1">
-                                    <div style={{ display: "inline-block", padding: 0 }} className="col-12 col-md-5">
-                                        <Link to={"/" + data.Store + "/" + data.NameSEO}>
-                                            <img
-                                                className="lazyload blur-up"
-                                                width="100%"
-                                                height="100%"
-                                                data-src={Array.isArray(data.i_game) && data.i_game[0].Splash}
-                                                alt={data.Name}
-                                            />
-                                        </Link>
-                                    </div>
-
-                                    <div
-                                        style={{ display: "inline-block", padding: 0, height: 215, overflowY: "scroll" }}
-                                        className="col-sm-12 col-md-7"
-                                    >
-                                        <div style={{ marginLeft: 3, marginRight: 3 }}>
-                                            {stripTags(Array.isArray(data.i_game) ? data.i_game[0].AboutGame : "")}
-                                        </div>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                    </div>
-                </div> */}
             </div>
         </>
     );

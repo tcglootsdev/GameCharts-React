@@ -2373,7 +2373,7 @@ small {
 }
 
 .btn-round {
-    border-radius: 30px;
+    border-radius: 30px !important;
 }
 
 .btn-square {
@@ -8353,12 +8353,6 @@ tr:first-child > td > .fc-day-grid-event {
 }
 .route a:hover {
     color: rgb(220, 220, 220);
-}
-.game-platforms span.supported-platforms {
-    float: left;
-    font-size: 2em;
-    font-family: inherit;
-    color: white;
 }
 
 .game-platforms li {

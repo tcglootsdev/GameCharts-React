@@ -1,4 +1,3 @@
-// Modules
 import React, { lazy } from "react";
 import { Link, useParams } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
@@ -71,7 +70,7 @@ const Game = () => {
     return (
         <>
             <div className="row game-platforms">
-                <span className="game-platforms-menu ml-0 d-none d-lg-block">
+                <span className="game-platforms-menu ml-0 d-none d-lg-block justify-content-end">
                     {gameData.stores.map((store) => {
                         if (store.Store === prmSource) {
                             return (

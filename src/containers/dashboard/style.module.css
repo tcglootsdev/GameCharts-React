@@ -1,0 +1,7 @@
+.supported-platforms {
+    float: left;
+    font-size: 2em;
+    font-family: inherit;
+    color: white;
+    max-width: 350px;
+}

@@ -1,56 +1,50 @@
 import React, { lazy } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import { useParams } from "react-router-dom";
 import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import Chart from "react-apexcharts";
 
 // Actions
-import { getDashboardData } from "@/redux/dashboard/actions";
+import { getPlatformData } from "@/redux/platform/actions";
+
+// Helpers
+import { ucfirst, stripTags, apexChtSeries } from "@/helpers/utils";
+import { todayChartOptions as tdyChtOpts } from "@/helpers/constants";
+
+// Icons
+import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
+import { faAngleDoubleRight } from "@fortawesome/free-solid-svg-icons";
 
 // Components
 const Table = lazy(() => import("@/components/table"));
 const GameSlider = lazy(() => import("@/components/gameslider"));
 
-// Helpers
-import { apexChtSeries } from "@/helpers/utils";
-import { todayChartOptions as tdyChtOpts } from "@/helpers/constants";
+const Platform = () => {
+    const { source: prmSource } = useParams();
 
-// Styles
-import classNames from "classnames/bind";
-import styles from "./style.module.css";
-const cx = classNames.bind(styles);
-
-const Dashboard = () => {
     const dispatch = useDispatch();
-    const dashboardData = useSelector((state) => state.dashboard);
+    const platformData = useSelector((state) => state.platform);
 
     React.useEffect(() => {
-        dispatch(getDashboardData());
-    }, [dispatch]);
+        dispatch(getPlatformData({ source: prmSource }));
+    }, [dispatch, prmSource]);
+
+    React.useEffect(() => {
+        console.log(platformData);
+    }, [platformData]);
 
     const mTrdGmesTblDta = React.useMemo(() => {
         const trdGmesTblDta = [];
-        if (typeof dashboardData !== "object") return trdGmesTblDta;
-        if (!Array.isArray(dashboardData.trending)) return trdGmesTblDta;
+        if (typeof platformData !== "object") return trdGmesTblDta;
+        if (!Array.isArray(platformData.trending)) return trdGmesTblDta;
 
-        for (let i = 0; i < dashboardData.trending.length; i++) {
-            const trdGme = dashboardData.trending[i];
+        for (let i = 0; i < platformData.trending.length; i++) {
+            const trdGme = platformData.trending[i];
             const row = {};
             row.key = trdGme.name;
             row.name = (
                 <Link className="text-dark" to={"/" + trdGme.store + "/" + trdGme.app_id}>
                     {trdGme.name}
-                </Link>
-            );
-            row.store = (
-                <Link to={"/" + trdGme.store}>
-                    <img
-                        className="lazyload blur-up"
-                        width="100%"
-                        height="100%"
-                        src={dashboardData.stores[trdGme.store].Splash}
-                        alt={dashboardData.stores[trdGme.store].store}
-                        style={{ maxWidth: "75px", maxHeight: "30px" }}
-                    />
                 </Link>
             );
             row.change = trdGme.change;
@@ -59,33 +53,21 @@ const Dashboard = () => {
             trdGmesTblDta.push(row);
         }
         return trdGmesTblDta;
-    }, [dashboardData]);
+    }, [platformData]);
 
     const mTopGmesTblDta = React.useMemo(() => {
         const topGmesTblDta = [];
-        if (typeof dashboardData !== "object") return topGmesTblDta;
-        if (!Array.isArray(dashboardData.topdata)) return topGmesTblDta;
+        if (typeof platformData !== "object") return topGmesTblDta;
+        if (!Array.isArray(platformData.topdata)) return topGmesTblDta;
 
-        for (let i = 0; i < dashboardData.topdata.length; i++) {
-            const topGme = dashboardData.topdata[i];
+        for (let i = 0; i < platformData.topdata.length; i++) {
+            const topGme = platformData.topdata[i];
             const row = {};
             row.key = topGme.Name;
             row.index = i + 1 + ".";
             row.name = (
                 <Link className="text-dark" to={"/" + topGme.Store + "/" + topGme.NameSEO}>
                     {topGme.Name}
-                </Link>
-            );
-            row.store = (
-                <Link to={"/" + topGme.Store}>
-                    <img
-                        className="lazyload blur-up"
-                        width="100%"
-                        height="100%"
-                        src={dashboardData.stores[topGme.Store].Splash}
-                        alt={dashboardData.stores[topGme.Store].Store}
-                        style={{ maxWidth: 75, maxHeight: 30 }}
-                    />
                 </Link>
             );
             row.LastCcu = Number(topGme.LastCcu).toLocaleString();
@@ -95,32 +77,20 @@ const Dashboard = () => {
             topGmesTblDta.push(row);
         }
         return topGmesTblDta;
-    }, [dashboardData]);
+    }, [platformData]);
 
     const mTrdGmesAvgTblDta = React.useMemo(() => {
         const trdGmesAvgTblDta = [];
-        if (typeof dashboardData !== "object") return trdGmesAvgTblDta;
-        if (!Array.isArray(dashboardData.trending_average)) return trdGmesAvgTblDta;
+        if (typeof platformData !== "object") return trdGmesAvgTblDta;
+        if (!Array.isArray(platformData.trending_average)) return trdGmesAvgTblDta;
 
-        for (let i = 0; i < dashboardData.trending_average.length; i++) {
-            const trdGmeAvg = dashboardData.trending_average[i];
+        for (let i = 0; i < platformData.trending_average.length; i++) {
+            const trdGmeAvg = platformData.trending_average[i];
             const row = {};
             row.key = trdGmeAvg.name;
             row.name = (
                 <Link className="text-dark" to={"/" + trdGmeAvg.store + "/" + trdGmeAvg.app_id}>
                     {trdGmeAvg.name}
-                </Link>
-            );
-            row.store = (
-                <Link to={"/" + trdGmeAvg.store}>
-                    <img
-                        className="lazyload blur-up"
-                        width="100%"
-                        height="100%"
-                        src={dashboardData.stores[trdGmeAvg.store].Splash}
-                        alt={dashboardData.stores[trdGmeAvg.store].Store}
-                        style={{ maxWidth: 75, maxHeight: 30 }}
-                    />
                 </Link>
             );
             row.change = trdGmeAvg.change;
@@ -129,33 +99,21 @@ const Dashboard = () => {
             trdGmesAvgTblDta.push(row);
         }
         return trdGmesAvgTblDta;
-    }, [dashboardData]);
+    }, [platformData]);
 
     const mTopGmesAvgTblDta = React.useMemo(() => {
         const topGmesAvgTblDta = [];
-        if (typeof dashboardData !== "object") return topGmesAvgTblDta;
-        if (!Array.isArray(dashboardData.topdata_average)) return topGmesAvgTblDta;
+        if (typeof platformData !== "object") return topGmesAvgTblDta;
+        if (!Array.isArray(platformData.topdata_average)) return topGmesAvgTblDta;
 
-        for (let i = 0; i < dashboardData.topdata_average.length; i++) {
-            const topGmeAvg = dashboardData.topdata_average[i];
+        for (let i = 0; i < platformData.topdata_average.length; i++) {
+            const topGmeAvg = platformData.topdata_average[i];
             const row = {};
             row.key = topGmeAvg.Name;
             row.index = i + 1 + ".";
             row.name = (
                 <Link className="text-dark" to={"/" + topGmeAvg.Store + "/" + topGmeAvg.NameSEO}>
                     {topGmeAvg.Name}
-                </Link>
-            );
-            row.store = (
-                <Link to={"/" + topGmeAvg.Store}>
-                    <img
-                        className="lazyload blur-up"
-                        width="100%"
-                        height="100%"
-                        src={dashboardData.stores[topGmeAvg.Store].Splash}
-                        alt={dashboardData.stores[topGmeAvg.Store].Store}
-                        style={{ maxWidth: 75, maxHeight: 30 }}
-                    />
                 </Link>
             );
             row.LastCcu = Number(topGmeAvg.LastCcu).toLocaleString();
@@ -165,86 +123,59 @@ const Dashboard = () => {
             topGmesAvgTblDta.push(row);
         }
         return topGmesAvgTblDta;
-    }, [dashboardData]);
+    }, [platformData]);
 
     return (
         <>
             <div className="row game-platforms">
-                <span className={"col-5 d-none d-lg-block " + cx("supported-platforms")}>Supported Platforms</span>
-                {Object.keys(dashboardData.stores).map((key) => (
-                    <div key={key} className={"col-6 col-lg-2 text-center " + cx("game-platform")}>
-                        <Link to={dashboardData.stores[key]["Store"]}>
-                            <img
-                                height="45px"
-                                src={dashboardData.stores[key]["Splash"]}
-                                alt={dashboardData.stores[key]["Store"]}
-                                style={{ maxWidth: "100%", maxHeight: "45px" }}
-                            />
-                        </Link>
-                    </div>
-                ))}
+                <span className="game-platforms-menu ml-0 d-none d-lg-flex justify-content-end">
+                    {Object.keys(platformData.stores).map((key) => {
+                        const store = platformData.stores[key];
+                        if (store.Store === prmSource) {
+                            return (
+                                <li key={store.Store}>
+                                    <Link href={"/" + store.Store}>
+                                        <img alt={store.Store} src={store.Splash} />
+                                    </Link>
+                                </li>
+                            );
+                        }
+                    })}
+                </span>
+                <div className="route-top">
+                    <Link to="/">GameCharts</Link>&nbsp;&nbsp;
+                    <Icon icon={faAngleDoubleRight} className="text-white" />
+                    &nbsp;&nbsp;
+                    <Link to={"/" + prmSource}>{ucfirst(prmSource)}</Link>
+                </div>
             </div>
             <div className="container">
-                <div className="desktop-ads-column-left"></div>
-                <div className="desktop-ads-column-right"></div>
                 <div className="row">
                     <div className="card">
                         <div className="card-header bg-gradient-grey">
-                            <div className="row justify-content-between">
+                            <div className="d-flex flex-row justify-content-between">
                                 <h3 className="h5 font-secondary text-uppercase m-0">Trending Games</h3>
-                                <h4 className="h5 font-secondary text-uppercase text-white m-0">By CurrentPlayers</h4>
+                                <h4 className="h5 font-secondary text-uppercase text-white m-0">By Current Players</h4>
                             </div>
                         </div>
                         <div className="card-body p-0">
                             <Table
-                                loading={dashboardData.loading}
+                                loading={platformData.loading}
                                 columns={[
                                     { name: "Name", data: "name" },
-                                    { name: "Platform", data: "store" },
                                     { name: "24-hour Change", data: "change", className: "text-center" },
                                     { name: "Today", data: "hist", className: "text-center" },
                                     { name: "Current Players", data: "ccu", className: "text-center" },
                                 ]}
                                 data={mTrdGmesTblDta}
                                 columnsDef={[
-                                    { target: 2, className: "text-success text-center font-weight-900" },
-                                    { target: 4, className: "text-center text-gray" },
-                                ]}
-                                emptyOpts={{
-                                    row: 10,
-                                }}
-                            />
-                        </div>
-                    </div>
-                </div>
-                <div className="row mt-3">
-                    <GameSlider loading={dashboardData.loading} data={dashboardData.trending} />
-                </div>
-                <div className="row mt-3">
-                    <div className="card">
-                        <div className="card-header bg-gradient-grey">
-                            <div className="row justify-content-between">
-                                <h3 className="h5 font-secondary text-uppercase m-0">Top Games</h3>
-                                <h4 className="h5 font-secondary text-uppercase text-white m-0">By Current Players</h4>
-                            </div>
-                        </div>
-                        <div className="card-body p-0">
-                            <Table
-                                loading={dashboardData.loading}
-                                columns={[
-                                    { name: "", data: "index" },
-                                    { name: "Name", data: "name" },
-                                    { name: "Platform", data: "store" },
-                                    { name: "Current Players", data: "LastCcu", className: "text-center" },
-                                    { name: "24-hour peak", data: "TopCcu24h", className: "text-center" },
-                                    { name: "30-days peak", data: "TopCcu30d", className: "text-center" },
-                                    { name: "Peak Players", data: "TopCcu", className: "text-center" },
-                                ]}
-                                data={mTopGmesTblDta}
-                                columnsDef={[
                                     {
-                                        target: [2, 3, 4, 5],
-                                        className: "text-center",
+                                        target: 1,
+                                        className: "text-success text-center font-weight-900",
+                                    },
+                                    {
+                                        target: 3,
+                                        className: "text-gray center",
                                     },
                                 ]}
                                 emptyOpts={{
@@ -255,7 +186,48 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <GameSlider loading={dashboardData.loading} data={dashboardData.topdata} />
+                    <GameSlider loading={platformData.loading} data={platformData.trending} />
+                </div>
+                <div className="row mt-3">
+                    <div className="card">
+                        <div className="card-header bg-gradient-grey">
+                            <div className="d-flex flex-row justify-content-between">
+                                <h3 className="h5 font-secondary text-uppercase m-0">Top Games</h3>
+                                <h4 className="h5 font-secondary text-uppercase text-white m-0">By Current Players</h4>
+                            </div>
+                        </div>
+                        <div className="card-body p-0">
+                            <Table
+                                loading={platformData.loading}
+                                columns={[
+                                    { name: "", data: "index" },
+                                    { name: "Name", data: "name" },
+                                    { name: "Current Players", data: "LastCcu", className: "text-center" },
+                                    { name: "24-hour peak", data: "TopCcu24h", className: "text-center" },
+                                    { name: "30-days peak", data: "TopCcu30d", className: "text-center" },
+                                    { name: "Peak Players", data: "TopCcu", className: "text-center" },
+                                ]}
+                                data={mTopGmesTblDta}
+                                columnsDef={[
+                                    {
+                                        target: [1, 2, 3, 4],
+                                        className: "text-center",
+                                    },
+                                ]}
+                                emptyOpts={{
+                                    row: 10,
+                                }}
+                            />
+                            <div className="d-flex justify-content-end border-top py-1 px-3">
+                                <Link className="btn btn-success btn-round" to={"/" + prmSource + "/player_count"}>
+                                    More
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div className="row mt-3">
+                    <GameSlider loading={platformData.loading} data={platformData.topdata} />
                 </div>
                 <div className="row mt-3">
                     <div className="card">
@@ -267,10 +239,9 @@ const Dashboard = () => {
                         </div>
                         <div className="card-body p-0">
                             <Table
-                                loading={dashboardData.loading}
+                                loading={platformData.loading}
                                 columns={[
                                     { name: "Name", data: "name" },
-                                    { name: "Platform", data: "store" },
                                     { name: "24-hour Change", data: "change" },
                                     { name: "Today", data: "hist" },
                                     { name: "Current Players", data: "ccu" },
@@ -278,11 +249,11 @@ const Dashboard = () => {
                                 data={mTrdGmesAvgTblDta}
                                 columnsDef={[
                                     {
-                                        target: 2,
+                                        target: 1,
                                         className: "text-success text-center font-weight-900",
                                     },
                                     {
-                                        target: 4,
+                                        target: 3,
                                         className: "text-center text-gray",
                                     },
                                 ]}
@@ -294,7 +265,7 @@ const Dashboard = () => {
                     </div>
                 </div>
                 <div className="row mt-3">
-                    <GameSlider loading={dashboardData.loading} data={dashboardData.trending_average} />
+                    <GameSlider loading={platformData.loading} data={platformData.trending_average} />
                 </div>
                 <div className="row mt-3">
                     <div className="card">
@@ -306,11 +277,10 @@ const Dashboard = () => {
                         </div>
                         <div className="card-body p-0">
                             <Table
-                                loading={dashboardData.loading}
+                                loading={platformData.loading}
                                 columns={[
                                     { name: "", data: "index" },
                                     { name: "Name", data: "name" },
-                                    { name: "Platform", data: "store" },
                                     { name: "Average Players", data: "LastCcu", className: "text-center" },
                                     { name: "24-hour Average", data: "MaxAvg24h", className: "text-center" },
                                     { name: "30-days Average", data: "MaxAvg30d", className: "text-center" },
@@ -319,11 +289,11 @@ const Dashboard = () => {
                                 data={mTopGmesAvgTblDta}
                                 columnsDef={[
                                     {
-                                        target: [3, 4, 5, 6],
+                                        target: [2, 3, 4, 5],
                                         className: "text-center",
                                     },
                                     {
-                                        taget: [4, 5, 6],
+                                        taget: [3, 4, 5],
                                         className: "text-gray",
                                     },
                                 ]}
@@ -331,15 +301,20 @@ const Dashboard = () => {
                                     row: 10,
                                 }}
                             />
+                            <div className="d-flex justify-content-end border-top py-1 px-3">
+                                <Link className="btn btn-success btn-round" to={"/" + prmSource + "/player_count"}>
+                                    More
+                                </Link>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="row mt-3 mb-3">
-                    <GameSlider loading={dashboardData.loading} data={dashboardData.topdata_average} />
+                    <GameSlider loading={platformData.loading} data={platformData.topdata_average} />
                 </div>
             </div>
         </>
     );
 };
 
-export default Dashboard;
+export default Platform;

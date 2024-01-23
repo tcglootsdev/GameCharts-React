@@ -3,24 +3,24 @@ import types from "./types";
 
 const initialState = {
     loading: false,
-    trending: [],
-    trending_average: [],
-    stores: [],
+    stores: {},
     topdata: [],
     topdata_average: [],
+    trending: [],
+    trending_average: [],
 };
 
 const reducer = handleActions(
     {
-        [types.GET_DASHBOARD_DATA_REQUEST]: (state, action) => ({
+        [types.GET_PLATFORM_DATA_REQUEST]: (state, action) => ({
             ...state,
             loading: true,
         }),
-        [types.GET_DASHBOARD_DATA_SUCCESS]: (state, action) => {
+        [types.GET_PLATFORM_DATA_SUCCESS]: (state, action) => {
             const { payload } = action;
             const newState = { ...state, loading: false };
             if (typeof payload === "object") {
-                const { trending, trending_average, stores, topdata, topdata_average } = payload;
+                const { stores, topdata, topdata_average, trending, trending_average } = payload;
                 if (typeof stores === "object") newState["stores"] = stores;
                 if (Array.isArray(trending)) newState["trending"] = trending;
                 if (Array.isArray(trending_average)) newState["trending_average"] = trending_average;
@@ -29,7 +29,7 @@ const reducer = handleActions(
             }
             return newState;
         },
-        [types.GET_DASHBOARD_DATA_FAIL]: (state, action) => ({
+        [types.GET_PLATFORM_DATA_FAIL]: (state, action) => ({
             ...state,
             loading: false,
         }),

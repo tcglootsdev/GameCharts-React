@@ -28,7 +28,7 @@ const Game = () => {
 
     React.useEffect(() => {
         dispatch(getGameData({ source: prmSource, nameseo: prmNameseo }));
-    }, [dispatch]);
+    }, [dispatch, prmSource, prmNameseo]);
 
     const mGameInfoAux = React.useMemo(() => {
         const { gameinfo_aux } = gameData;

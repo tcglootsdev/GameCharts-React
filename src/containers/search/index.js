@@ -18,9 +18,6 @@ import { getSearchData } from "@/redux/search/actions";
 import { apexChtSeries } from "@/helpers/utils";
 import { todayChartOptions as tdyChtOpts } from "@/helpers/constants";
 
-// Styles
-import "./style.css";
-
 const search = () => {
     const { searchValue } = useParams();
 

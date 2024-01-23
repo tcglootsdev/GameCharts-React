@@ -302,7 +302,7 @@ const Platform = () => {
                                 }}
                             />
                             <div className="d-flex justify-content-end border-top py-1 px-3">
-                                <Link className="btn btn-success btn-round" to={"/" + prmSource + "/player_count"}>
+                                <Link className="btn btn-success btn-round" to={"/" + prmSource + "/player_average"}>
                                     More
                                 </Link>
                             </div>

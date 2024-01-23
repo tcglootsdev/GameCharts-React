@@ -2,27 +2,11 @@ import React from "react";
 import Helmet from "react-helmet";
 
 const Privacy = () => {
-    const title = React.useMemo(() => "Game Charts - Privacy", []);
-    const description = React.useMemo(() => "GameCharts privacy policy", []);
-
     return (
         <>
-            <Helmet>
-                <title>{title}</title>
-                <meta name="description" content={description} />
-                <link rel="canonical" href="https://gamecharts.org/about" />
-                <meta name="twitter:title" content={title}></meta>
-                <meta name="twitter:description" content={description} />
-                <meta property="og:title" content={title} />
-                <meta property="og:description" content={description} />
-            </Helmet>
-            <div className="row game-platforms" style={{ background: "#f2f5f7" }}></div>
-            <div className="page-wrapper">
+            <div className="container">
                 <div className="row">
-                    <div className="col-md-3"></div>
-                    <div className="col-md-6">
-                        <div className="content">
-                            <h1>Privacy Policy of GameCharts</h1>
+                <h1>Privacy Policy of GameCharts</h1>
                             <p>GameCharts operates the http://gamecharts.local website, which provides the SERVICE.</p>
                             <p>
                                 This page is used to inform website visitors regarding our policies with the collection, use, and disclosure of
@@ -36,7 +20,7 @@ const Privacy = () => {
                             <p>
                                 The terms used in this Privacy Policy have the same meanings as in our Terms and Conditions, which is accessible at
                                 http://gamecharts.local, unless otherwise defined in this Privacy Policy. Our Privacy Policy was created with the help
-                                of the <a href="https://www.privacypolicytemplate.net">Privacy Policy Template</a> and the{" "}
+                                of the <a href="https://www.privacypolicytemplate.net">Privacy Policy Template</a> and the
                                 <a href="https://www.disclaimergenerator.org/">Disclaimer Generator</a>.
                             </p>
                             <h2>Information Collection and Use</h2>
@@ -63,7 +47,7 @@ const Privacy = () => {
                                 cookies, you may not be able to use some portions of our Service.
                             </p>
                             <p>
-                                For more general information on cookies, please read{" "}
+                                For more general information on cookies, please read
                                 <a href="https://www.cookieconsent.com/what-are-cookies/">"What Are Cookies"</a>.
                             </p>
                             <h2>Service Providers</h2>
@@ -106,10 +90,7 @@ const Privacy = () => {
                                 immediately, after they are posted on this page.
                             </p>
                             <h2>Contact Us</h2>
-                            <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us.</p>{" "}
-                        </div>
-                    </div>
-                    <div className="col-md-3"></div>
+                            <p>If you have any questions or suggestions about our Privacy Policy, do not hesitate to contact us.</p>
                 </div>
             </div>
         </>

@@ -8329,8 +8329,8 @@ tr:first-child > td > .fc-day-grid-event {
     font-size: 2em;
     font-family: inherit;
     color: white;
-    margin-top: 5px;
-    margin-left: 20px;
+    /* margin-top: 5px; */
+    margin-left: 30px;
 }
 .route-top {
     float: left;

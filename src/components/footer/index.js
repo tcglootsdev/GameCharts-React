@@ -1,25 +1,25 @@
 // Modules
 import React from "react";
-import axios from "axios";
+import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 
+// Icons
+import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
+import { faFacebook, faInstagram, faYoutube, faTwitter } from "@fortawesome/free-brands-svg-icons";
+
+// Actions
+import { getDashboardData } from "@/redux/dashboard/actions";
+
 // Helpers
-import { ucfirst } from "../helpers/utils";
+import { ucfirst } from "@/helpers/utils";
 
 const Footer = (props) => {
-    const [sFooterData, setFooterData] = React.useState({
-        stores: {},
-    });
+    const dispatch = useDispatch();
+    const footerData = useSelector((state) => state.dashboard);
 
-    // React.useEffect(() => {
-    //     try {
-    //         axios.get("https://gamecharts.org/api/dashboard.php").then((response) => {
-    //             setFooterData(response.data);
-    //         });
-    //     } catch (error) {
-    //         console.log(error.message);
-    //     }
-    // }, []);
+    React.useEffect(() => {
+        dispatch(getDashboardData());
+    }, [dispatch]);
 
     return (
         <footer className="section footer-classic context-dark bg-image" style={{ background: "#2d3246" }}>
@@ -27,22 +27,22 @@ const Footer = (props) => {
                 <div className="row">
                     <div className="col-3">
                         <a href="https://www.facebook.com/Gamecharts-111747700514669/">
-                            <i className="fab fa-facebook-f"></i>
+                            <Icon icon={faFacebook} />
                         </a>
                     </div>
                     <div className="col-3">
                         <a href="https://www.instagram.com/gamechartsorg/">
-                            <i className="fab fa-instagram"></i>
+                            <Icon icon={faInstagram} />
                         </a>
                     </div>
                     <div className="col-3">
                         <a href="https://www.youtube.com/channel/UCBXUnqxAMX8NUZvmN6VlROA/">
-                            <i className="fab fa-youtube"></i>
+                            <Icon icon={faYoutube} />
                         </a>
                     </div>
                     <div className="col-3">
                         <a href="https://twitter.com/Gamecharts1">
-                            <i className="fab fa-twitter"></i>
+                            <Icon icon={faTwitter} />
                         </a>
                     </div>
                 </div>
@@ -68,36 +68,36 @@ const Footer = (props) => {
                             <div className="col-6 text-white footer-text">
                                 Supported Platforms
                                 <ul style={{ paddingTop: "10px" }}>
-                                    {/* {Object.keys(sFooterData.stores).map((key) => (
+                                    {Object.keys(footerData.stores).map((key) => (
                                         <li key={key} style={{ listStyleType: "none", paddingTop: 5 }}>
-                                            <Link className="footer-items" to={"/" + sFooterData.stores[key].Store}>
-                                                {ucfirst(sFooterData.stores[key].Store)}
+                                            <Link className="footer-items" to={"/" + footerData.stores[key].Store}>
+                                                {ucfirst(footerData.stores[key].Store)}
                                             </Link>
                                         </li>
-                                    ))} */}
+                                    ))}
                                 </ul>
                             </div>
                         </div>
                     </div>
                     <div className="col-12 col-md-6 ">
                         <div className="row">
-                            {/* {Object.keys(sFooterData.stores).map((key) => (
+                            {Object.keys(footerData.stores).map((key) => (
                                 <div key={key} className="footer-item col-md-6 col-6">
-                                    <Link to={"/" + sFooterData.stores[key].Store + "/player_count"}>
-                                        Top {ucfirst(sFooterData.stores[key].Store)} Games
+                                    <Link to={"/" + footerData.stores[key].Store + "/player_count"}>
+                                        Top {ucfirst(footerData.stores[key].Store)} Games
                                     </Link>
 
                                     <ul style={{ paddingTop: 10 }}>
-                                        {sFooterData.stores[key].platform_top_games.map((data) => (
+                                        {footerData.stores[key].platform_top_games.map((data) => (
                                             <li key={data.Name} style={{ listStyleType: "none", paddingTop: 5 }}>
-                                                <Link className="footer-items" to={"/" + sFooterData.stores[key].Store + "/" + data.NameSEO}>
+                                                <Link className="footer-items" to={"/" + footerData.stores[key].Store + "/" + data.NameSEO}>
                                                     {data.Name}
                                                 </Link>
                                             </li>
                                         ))}
                                     </ul>
                                 </div>
-                            ))} */}
+                            ))}
                         </div>
                     </div>
                 </div>

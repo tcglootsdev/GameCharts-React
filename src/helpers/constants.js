@@ -13,7 +13,7 @@ export const todayChartOptions = {
     markers: {
         size: 0,
     },
-    colors: ["#028602"],
+    colors: ["#2b6228"],
     tooltip: {
         fixed: {
             enabled: false,

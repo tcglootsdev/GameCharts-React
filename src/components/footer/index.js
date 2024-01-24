@@ -26,22 +26,22 @@ const Footer = (props) => {
             <div className="social-footer" style={{ padding: "1em" }}>
                 <div className="row">
                     <div className="col-3">
-                        <a href="https://www.facebook.com/Gamecharts-111747700514669/">
+                        <a href="https://www.facebook.com/Gamecharts-111747700514669/" aria-label="Facebook">
                             <Icon icon={faFacebook} />
                         </a>
                     </div>
                     <div className="col-3">
-                        <a href="https://www.instagram.com/gamechartsorg/">
+                        <a href="https://www.instagram.com/gamechartsorg/" aria-label="Instagram">
                             <Icon icon={faInstagram} />
                         </a>
                     </div>
                     <div className="col-3">
-                        <a href="https://www.youtube.com/channel/UCBXUnqxAMX8NUZvmN6VlROA/">
+                        <a href="https://www.youtube.com/channel/UCBXUnqxAMX8NUZvmN6VlROA/" aria-label="Youtube">
                             <Icon icon={faYoutube} />
                         </a>
                     </div>
                     <div className="col-3">
-                        <a href="https://twitter.com/Gamecharts1">
+                        <a href="https://twitter.com/Gamecharts1" aria-label="Twitter">
                             <Icon icon={faTwitter} />
                         </a>
                     </div>

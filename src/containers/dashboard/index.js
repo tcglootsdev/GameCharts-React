@@ -48,7 +48,7 @@ const Dashboard = () => {
                         width="100%"
                         height="100%"
                         src={dashboardData.stores[trdGme.store].Splash}
-                        alt={dashboardData.stores[trdGme.store].store}
+                        alt={dashboardData.stores[trdGme.store].Store}
                         style={{ maxWidth: "75px", maxHeight: "30px" }}
                     />
                 </Link>
@@ -207,7 +207,7 @@ const Dashboard = () => {
                                 ]}
                                 data={mTrdGmesTblDta}
                                 columnsDef={[
-                                    { target: 2, className: "text-success text-center font-weight-900" },
+                                    { target: 2, className: "app-text-success text-center font-weight-900" },
                                     { target: 4, className: "text-center text-gray" },
                                 ]}
                                 emptyOpts={{
@@ -279,7 +279,7 @@ const Dashboard = () => {
                                 columnsDef={[
                                     {
                                         target: 2,
-                                        className: "text-success text-center font-weight-900",
+                                        className: "app-text-success text-center font-weight-900",
                                     },
                                     {
                                         target: 4,

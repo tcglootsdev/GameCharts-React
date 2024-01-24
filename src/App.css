@@ -1994,10 +1994,6 @@ small {
     color: #fbb624 !important;
 }
 
-.text-success {
-    color: #1ecab8 !important;
-}
-
 .text-info {
     color: #00bcd4 !important;
 }
@@ -2016,10 +2012,6 @@ small {
 
 .text-dark {
     color: #2f394e !important;
-}
-
-.text-gray {
-    color: #808080 !important;
 }
 
 .card {
@@ -8435,4 +8427,36 @@ tr:first-child > td > .fc-day-grid-event {
     #searched_game_old {
         width: 100%;
     }
+}
+
+[data-app-theme="light"] {
+    --app-blue: #007bff;
+    --app-indigo: #6610f2;
+    --app-purple: #6f42c1;
+    --app-pink: #e83e8c;
+    --app-red: #dc3545;
+    --app-orange: #fd7e14;
+    --app-yellow: #ffc107;
+    --app-green: #28a745;
+    --app-teal: #20c997;
+    --app-cyan: #17a2b8;
+    --app-white: #fff;
+    --app-gray: #525252;
+    --app-gray-dark: #343a40;
+    --app-primary: #007bff;
+    --app-secondary: #6c757d;
+    --app-success: #2b6228;
+    --app-info: #17a2b8;
+    --app-warning: #ffc107;
+    --app-danger: #dc3545;
+    --app-light: #f8f9fa;
+    --app-dark: #343a40;
+}
+
+.app-text-success {
+    color: var(--app-success);
+}
+
+.app-text-gray {
+    color: var(--app-gray);
 }

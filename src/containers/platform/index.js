@@ -171,11 +171,11 @@ const Platform = () => {
                                 columnsDef={[
                                     {
                                         target: 1,
-                                        className: "text-success text-center font-weight-900",
+                                        className: "app-text-success text-center font-weight-900",
                                     },
                                     {
                                         target: 3,
-                                        className: "text-gray center",
+                                        className: "app-text-gray center",
                                     },
                                 ]}
                                 emptyOpts={{
@@ -250,11 +250,11 @@ const Platform = () => {
                                 columnsDef={[
                                     {
                                         target: 1,
-                                        className: "text-success text-center font-weight-900",
+                                        className: "app-text-success text-center font-weight-900",
                                     },
                                     {
                                         target: 3,
-                                        className: "text-center text-gray",
+                                        className: "text-center app-text-gray",
                                     },
                                 ]}
                                 emptyOpts={{
@@ -294,7 +294,7 @@ const Platform = () => {
                                     },
                                     {
                                         taget: [3, 4, 5],
-                                        className: "text-gray",
+                                        className: "app-text-gray",
                                     },
                                 ]}
                                 emptyOpts={{

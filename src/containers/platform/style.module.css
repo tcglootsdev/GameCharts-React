@@ -1,0 +1,4 @@
+.more {
+    background-color: var(--app-background-primary);
+    border-color: var(--app-table-border) !important;
+}

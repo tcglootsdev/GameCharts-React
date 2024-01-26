@@ -1,0 +1,7 @@
+.about {
+  display: inline-block;
+  padding: 0;
+  height: 215px;
+  overflow-y: scroll;
+  color: var(--app-text);
+}

@@ -12,44 +12,44 @@ const Privacy = lazy(() => import("@/containers/privacy"));
 const Cookies = lazy(() => import("@/containers/cookies"));
 
 const AppRouter = () => {
-    return useRoutes([
-        {
-            path: "/",
-            element: <Dashboard />,
-        },
-        {
-            path: "/about",
-            element: <About />,
-        },
-        {
-            path: "/privacy",
-            element: <Privacy />,
-        },
-        {
-            path: "cookies",
-            element: <Cookies />,
-        },
-        {
-            path: "/:source/player_count",
-            element: <Player type="ccu" />,
-        },
-        {
-            path: "/:source/player_average",
-            element: <Player type="avg" />,
-        },
-        {
-            path: "/search/:searchValue",
-            element: <Search />,
-        },
-        {
-            path: "/:source",
-            element: <Platform />,
-        },
-        {
-            path: "/:source/:nameseo",
-            element: <Game />,
-        },
-    ]);
+  return useRoutes([
+    {
+      path: "/",
+      element: <Dashboard />,
+    },
+    {
+      path: "/about",
+      element: <About />,
+    },
+    {
+      path: "/privacy",
+      element: <Privacy />,
+    },
+    {
+      path: "cookies",
+      element: <Cookies />,
+    },
+    {
+      path: "/:source/player_count/:page",
+      element: <Player type="ccu" />,
+    },
+    {
+      path: "/:source/player_average/:page",
+      element: <Player type="avg" />,
+    },
+    {
+      path: "/search/:searchValue",
+      element: <Search />,
+    },
+    {
+      path: "/:source",
+      element: <Platform />,
+    },
+    {
+      path: "/:source/:nameseo",
+      element: <Game />,
+    },
+  ]);
 };
 
 export default AppRouter;

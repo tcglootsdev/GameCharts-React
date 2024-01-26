@@ -1,0 +1,11 @@
+.table th {
+  background-color: var(--app-table-header) !important;
+  border-color: var(--app-table-border) !important;
+  color: var(--app-text) !important;
+}
+
+.table td {
+  background-color: var(--app-background-primary) !important;
+  border-color: var(--app-table-border) !important;
+  color: var(--app-text);
+}

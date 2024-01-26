@@ -8,7 +8,7 @@ import { saveThemeMode } from "@/redux/theme/actions";
 
 // Icons
 import { FontAwesomeIcon as Icon } from "@fortawesome/react-fontawesome";
-import { faSearch, faSun, faMoon } from "@fortawesome/free-solid-svg-icons";
+import { faSearch, faSun, faMoon, faNavicon } from "@fortawesome/free-solid-svg-icons";
 
 // Styles
 import "./style.css";
@@ -58,91 +58,96 @@ const Navigation = (props) => {
   );
 
   return (
-    <nav className={"navbar navbar-expand-lg navbar-light bg-gradient-green fixed-top"}>
-      <Link to={"/"}>
-        <img
-          src={PUBLIC_URL + "/assets/images/" + (sCurrentTheme === "light" ? "logo-1.png" : "logo-1-dark.png")}
-          className="logoGameCharts"
-          alt="Game Charts logo"
-          width="235px"
-          height="60px"
-        />
-      </Link>
-      <button
-        className="navbar-toggler"
-        type="button"
-        data-toggle="collapse"
-        data-target="#navbarTogglerDemo02"
-        aria-controls="navbarTogglerDemo02"
-        aria-expanded="false"
-        aria-label="Toggle navigation"
-      >
-        <span className="navbar-toggler-icon"></span>
-      </button>
-      <div className="collapse navbar-collapse" id="navbarTogglerDemo02">
-        <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
-          <li className="nav-item active">
-            <span className="nav-link game-subject">Realtime game analysis and charts</span>
-          </li>
-        </ul>
-        {sCurrentTheme === "light" && <Icon icon={faSun} onClick={() => cbSetAppThemeMode("dark")} className={cx("select-theme")} />}
-        {sCurrentTheme === "dark" && <Icon icon={faMoon} onClick={() => cbSetAppThemeMode("light")} className={cx("select-theme")} />}
-      </div>
-      <ul className="list-unstyled topbar-nav navbar-search">
-        <li className={cx("app-search")}>
-          <form
-            role="search"
-            onSubmit={(e) => {
-              e.preventDefault();
-            }}
-          >
-            <input
-              type="text"
-              value={sSearchValue}
-              onChange={(e) => setSearchValue(e.target.value)}
-              placeholder="Search..."
-              className="form-control"
-              onKeyDown={(e) => {
-                if (e.keyCode === 13) {
-                  if (sSearchValue.length > 1) {
-                    setSearchValue("");
-                    navigate("/search/" + sSearchValue);
-                  }
-                }
-              }}
-            />
-            <Icon
-              icon={faSearch}
-              onClick={() => {
-                if (sSearchValue.length > 1) {
-                  setSearchValue("");
-                  navigate("/search/" + sSearchValue);
-                }
-              }}
-            />
-          </form>
-          {sSearchValue.length > 1 && (
-            <div className={cx("searched-game")}>
-              {mSearchResults.length > 0 &&
-                mSearchResults.map((resultItem, index) => (
-                  <div key={index} className={cx("search-item")}>
-                    <Link to={"/" + resultItem.Source + "/" + resultItem.NameSEO}>
-                      <img src={resultItem.Logo} className="item-img" alt={resultItem.Name} />
-                      {resultItem.Name + " - "}
-                      <span>{resultItem.Source}</span>
-                    </Link>
+    <>
+      <nav className="navbar navbar-expand-lg navbar-light bg-gradient-green fixed-top app-text">
+        <Link to={"/"}>
+          <img
+            src={PUBLIC_URL + "/assets/images/" + (sCurrentTheme === "light" ? "logo-1.png" : "logo-1-dark.png")}
+            className="logoGameCharts"
+            alt="Game Charts logo"
+            width="235px"
+            height="60px"
+          />
+        </Link>
+        <button
+          className={"navbar-toggler " + cx("navbar-toggler")}
+          type="button"
+          data-toggle="collapse"
+          data-target="#navbarTogglerDemo02"
+          aria-controls="navbarTogglerDemo02"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <Icon icon={faNavicon} />
+        </button>
+        <div className={"collapse navbar-collapse " + cx("navbar-collapse")} id="navbarTogglerDemo02">
+          <ul className="navbar-nav mr-auto mt-2 mt-lg-0">
+            <li className="nav-item active">
+              <span className="nav-link game-subject">Realtime game analysis and charts</span>
+            </li>
+          </ul>
+          <div className="d-flex align-items-center">
+            {sCurrentTheme === "light" && <Icon icon={faSun} onClick={() => cbSetAppThemeMode("dark")} className={cx("select-theme")} />}
+            {sCurrentTheme === "dark" && <Icon icon={faMoon} onClick={() => cbSetAppThemeMode("light")} className={cx("select-theme")} />}
+
+            <div className="list-unstyled topbar-nav navbar-search">
+              <div className={cx("app-search")}>
+                <form
+                  role="search"
+                  onSubmit={(e) => {
+                    e.preventDefault();
+                  }}
+                >
+                  <input
+                    type="text"
+                    value={sSearchValue}
+                    onChange={(e) => setSearchValue(e.target.value)}
+                    placeholder="Search..."
+                    className="form-control"
+                    onKeyDown={(e) => {
+                      if (e.keyCode === 13) {
+                        if (sSearchValue.length > 1) {
+                          setSearchValue("");
+                          navigate("/search/" + sSearchValue);
+                        }
+                      }
+                    }}
+                  />
+                  <Icon
+                    icon={faSearch}
+                    onClick={() => {
+                      if (sSearchValue.length > 1) {
+                        setSearchValue("");
+                        navigate("/search/" + sSearchValue);
+                      }
+                    }}
+                  />
+                </form>
+                {sSearchValue.length > 1 && (
+                  <div className={cx("searched-game")}>
+                    {mSearchResults.length > 0 &&
+                      mSearchResults.map((resultItem, index) => (
+                        <div key={index} className={cx("search-item")}>
+                          <Link to={"/" + resultItem.Source + "/" + resultItem.NameSEO} onClick={() => setSearchValue("")}>
+                            <img src={resultItem.Logo} className="item-img" alt={resultItem.Name} />
+                            {resultItem.Name + " - "}
+                            <span>{resultItem.Source}</span>
+                          </Link>
+                        </div>
+                      ))}
+                    {mSearchResults.length === 0 && (
+                      <div className={cx("no-items")}>
+                        <span>Not Games Found</span>
+                      </div>
+                    )}
                   </div>
-                ))}
-              {mSearchResults.length === 0 && (
-                <div className={cx("no-items")}>
-                  <span>Not Games Found</span>
-                </div>
-              )}
+                )}
+              </div>
             </div>
-          )}
-        </li>
-      </ul>
-    </nav>
+          </div>
+        </div>
+      </nav>
+    </>
   );
 };
 

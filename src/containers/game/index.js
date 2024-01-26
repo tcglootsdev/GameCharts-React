@@ -151,6 +151,11 @@ const Game = () => {
                     min: new Date().getTime() - 10 * 365 * 24 * 60 * 60 * 1000,
                     max: new Date().getTime() + 24 * 60 * 60 * 1000,
                     ordinal: true,
+                    labels: {
+                      style: themeMode === "dark" && {
+                        color: "#C0C0C0",
+                      },
+                    },
                   },
                   rangeSelector: {
                     allButtonsEnabled: true,
@@ -211,6 +216,13 @@ const Game = () => {
                       color: "#C0C0C0",
                     },
                   },
+                  xAxis: {
+                    labels: {
+                      style: themeMode === "dark" && {
+                        color: "#C0C0C0",
+                      },
+                    },
+                  },
 
                   rangeSelector: {
                     enabled: false,
@@ -268,6 +280,9 @@ const Game = () => {
                   title: {
                     text: "Daily average users",
                     align: "left",
+                    style: themeMode === "dark" && {
+                      color: "#C0C0C0",
+                    },
                   },
 
                   navigation: {
@@ -305,6 +320,11 @@ const Game = () => {
                     min: new Date().getTime() - 10 * 365 * 24 * 60 * 60 * 1000,
                     max: new Date().getTime() + 24 * 60 * 60 * 1000,
                     ordinal: true,
+                    labels: {
+                      style: themeMode === "dark" && {
+                        color: "#C0C0C0",
+                      },
+                    },
                   },
 
                   rangeSelector: {

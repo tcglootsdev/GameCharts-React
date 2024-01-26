@@ -8238,7 +8238,7 @@ tr:first-child > td > .fc-day-grid-event {
 
 /*----home page----*/
 .fixed-top {
-  padding: 0 5em;
+  padding: 0 5em !important;
   background: white;
   height: 70px;
   border-bottom: 5px solid var(--app-shadow-color);
@@ -8246,7 +8246,7 @@ tr:first-child > td > .fc-day-grid-event {
 }
 .navbar-search {
   float: right;
-  margin-top: 18px;
+  /* margin-top: 18px; */
 }
 .add-1-container {
   padding: 1.5em 0;
@@ -8352,7 +8352,7 @@ tr:first-child > td > .fc-day-grid-event {
 
 @media (max-width: 995px) {
   .fixed-top {
-    padding: 0;
+    padding: 0 !important;
   }
   .fixed-top a {
     padding-left: 2em;

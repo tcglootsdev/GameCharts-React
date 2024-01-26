@@ -21,8 +21,9 @@
 .searched-game {
   position: fixed;
   width: 500px;
-  height: 60px;
+  /* height: 60px; */
   right: 0;
+  padding-left: 105px;
 }
 
 .search-item {
@@ -56,4 +57,15 @@
   color: var(--app-text);
   margin: 10px;
   cursor: pointer;
+}
+
+.navbar-collapse {
+  background-color: var(--app-background-primary);
+  /* display: flex; */
+  /* flex-direction: ; */
+}
+
+[data-app-theme="dark"] .navbar-toggler {
+  color: white !important;
+  border: 2px solid white !important;
 }

@@ -303,13 +303,6 @@ a:focus {
     padding-right: 0px;
   }
 
-  #searched_game {
-    width: 100%;
-    top: 215px;
-    /* left:-35px; */
-    padding-left: 105px;
-  }
-
   .social-footer {
     width: 50%;
     margin: 0 auto;

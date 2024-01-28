@@ -23,7 +23,6 @@
   width: 500px;
   /* height: 60px; */
   right: 0;
-  padding-left: 105px;
 }
 
 .search-item {
@@ -68,4 +67,10 @@
 [data-app-theme="dark"] .navbar-toggler {
   color: white !important;
   border: 2px solid white !important;
+}
+
+@media only screen and (max-width: 767px) {
+  .searched-game {
+    padding-left: 105px;
+  }
 }

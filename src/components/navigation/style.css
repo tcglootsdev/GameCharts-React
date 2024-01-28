@@ -66,6 +66,7 @@
   font-size: 20px;
   margin-left: 2em;
   color: var(--app-text) !important;
+  max-height: 70px;
 }
 
 @media (max-width: 995px) {

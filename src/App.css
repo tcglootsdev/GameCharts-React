@@ -8218,13 +8218,6 @@ tr:first-child > td > .fc-day-grid-event {
   background-size: cover;
 }
 
-.item-img {
-  max-height: 59px;
-  float: left;
-  border-radius: 3px 0 0 3px;
-  object-fit: contain;
-}
-
 .line {
   height: 1px;
 }

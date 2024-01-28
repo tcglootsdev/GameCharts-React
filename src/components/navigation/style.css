@@ -1,7 +1,7 @@
 .app-search {
   position: relative;
   margin-left: 5px;
-  line-height: 70px;
+  /* line-height: 70px; */
 }
 
 .app-search form {
@@ -38,7 +38,7 @@
 
 .app-search svg {
   position: absolute;
-  top: 27px;
+  top: 10px;
   left: 260px;
   display: block;
   width: 34px;
@@ -71,5 +71,11 @@
 @media (max-width: 995px) {
   .game-subject {
     margin-left: 5px;
+  }
+}
+
+@media only screen and (max-width: 992px) {
+  .search-content {
+    margin-bottom: 10px;
   }
 }

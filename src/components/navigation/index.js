@@ -86,12 +86,12 @@ const Navigation = (props) => {
               <span className="nav-link game-subject">Realtime game analysis and charts</span>
             </li>
           </ul>
-          <div className="d-flex align-items-center">
+          <div className="d-flex align-items-center search-content">
             {sCurrentTheme === "light" && <Icon icon={faSun} onClick={() => cbSetAppThemeMode("dark")} className={cx("select-theme")} />}
             {sCurrentTheme === "dark" && <Icon icon={faMoon} onClick={() => cbSetAppThemeMode("light")} className={cx("select-theme")} />}
 
             <div className="list-unstyled topbar-nav navbar-search">
-              <div className={cx("app-search")}>
+              <div className="app-search">
                 <form
                   role="search"
                   onSubmit={(e) => {
@@ -128,11 +128,11 @@ const Navigation = (props) => {
                     {mSearchResults.length > 0 &&
                       mSearchResults.map((resultItem, index) => (
                         <div key={index} className={cx("search-item")}>
-                          <Link to={"/" + resultItem.Source + "/" + resultItem.NameSEO} onClick={() => setSearchValue("")}>
-                            <img src={resultItem.Logo} className="item-img" alt={resultItem.Name} />
-                            {resultItem.Name + " - "}
-                            <span>{resultItem.Source}</span>
-                          </Link>
+                          {/* <Link to={"/" + resultItem.Source + "/" + resultItem.NameSEO} onClick={() => setSearchValue("")}> */}
+                            <div><img src={resultItem.Logo} className={cx("item-img")} alt={resultItem.Name} /></div>
+                            <div className={cx("name")}>{resultItem.Name + " - "}</div>
+                            <span className={cx("store")}>{resultItem.Source}</span>
+                          {/* </Link> */}
                         </div>
                       ))}
                     {mSearchResults.length === 0 && (
